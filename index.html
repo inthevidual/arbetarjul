@@ -184,8 +184,8 @@
   @media (min-width: 640px) { .neighbours { grid-template-columns: 1fr 1fr; } }
   .neighbours p { margin: 0 0 5px; }
   .neighbours p.same { opacity: .78; }
-  .neighbours b { font-family: var(--font-display); font-size: 1.2em; font-weight: 400; margin-right: 4px; }
-  .neighbours button { all: unset; cursor: pointer; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .neighbours b { font-size: 1.15em; font-weight: 800; margin-right: 4px; }
+  .neighbours button { all: unset; cursor: pointer; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 3px; }
   .neighbours button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
   /* ---------- Sektioner ---------- */
@@ -206,7 +206,7 @@
   .tile:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .tile .y { font-family: var(--font-body); font-weight: 700; font-size: 1.05rem; line-height: 1; display: block; }
   .tile .n { font-family: var(--font-display); font-weight: 400; font-size: 2.3rem; line-height: 1; display: block; margin: 8px 0 4px; }
-  .tile .l { font-size: .72rem; line-height: 1.1; display: block; opacity: .9; }
+  .tile .l { font-size: .72rem; line-height: 1.1; display: block; opacity: .95; font-weight: 700; }
   .tile.arbetar { background: var(--red); color: var(--red-ink); border-color: var(--red-deep); }
   .tile.grasosse { background: #6F6D67; color: #F1EFE9; border-color: #3A3936; }
   .tile.arbetsgivar { background: var(--saff); color: var(--saff-ink); border-color: #B58500; }
@@ -225,7 +225,7 @@
   .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
   .cal .h { font-size: .8rem; font-weight: 700; text-align: center; padding-bottom: 4px; }
   .cell { min-height: 62px; border: 1px solid var(--ink); border-radius: 2px; padding: 4px 5px; display: flex; flex-direction: column; justify-content: space-between; font-size: .7rem; line-height: 1.05; overflow: hidden; }
-  .cell .lbl { hyphens: manual; }
+  .cell .lbl { hyphens: manual; font-weight: 700; }
   @media (max-width: 480px) { .cell { font-size: .58rem; padding: 3px 3px; min-height: 58px; } .cell .d { font-size: 1.2rem; } }
   .cell .d { font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; line-height: 1; }
   .cell .d em { font-style: normal; font-family: var(--font-body); font-weight: 700; font-size: .6rem; margin-left: 3px; }
