@@ -606,10 +606,10 @@
         <p>Det sämsta året som går att få. Senast det hände var ${prevMin}. ${cur === mn ? `${y} är själv ett sådant år.` : `${y} ger ${cur}.`}</p></div>`;
 
     const t = A.tiers(k);
-    const sev = t.byWeekday.map((v, i) => { const c = A.category(v.year, k); return `<tr><td>${A.WD[i]}</td><td><span class="pill ${c.key === cat.key ? 'on' : ''}">${cap(c.name)}</span></td><td class="num">${v.total}</td></tr>`; }).join('');
+    const sev = t.byWeekday.map((v, i) => { const c = A.category(v.year, k); return `<tr><td>${A.WD[i]}</td><td><span class="pill ${c.key === 'arbetar' ? 'on' : ''}">${cap(c.name)}</span></td><td class="num">${v.total}</td></tr>`; }).join('');
     $('#seven').innerHTML = `<h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:400;margin:0 0 4px">De sju möjliga julaftnarna</h3>
       <p class="lede">Julen styrs helt av vilken veckodag julafton infaller på. Så här faller det ut ${k ? 'med' : 'utan'} klämdagar.</p>
-      <table><thead><tr><th>Julafton på</th><th>Sortens jul</th><th class="num">Lediga dagar</th></tr></thead><tbody>${sev}</tbody></table>`;
+      <table><thead><tr><th>Julafton på</th><th>Sorts jul</th><th class="num">Lediga dagar</th></tr></thead><tbody>${sev}</tbody></table>`;
 
     // Metod
     $('#method').innerHTML = `
