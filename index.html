@@ -33,10 +33,16 @@
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+Sans:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/abril-fatface-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/alegreya-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/alegreya-sans-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face { font-family: 'Abril Fatface'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/abril-fatface-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Alegreya Sans'; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/alegreya-sans-400-italic-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/alegreya-sans-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/alegreya-sans-700-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/alegreya-sans-800-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
   :root {
     --font-display: "Abril Fatface", "Bodoni MT", Georgia, serif;
     --font-body: "Alegreya Sans", "Helvetica Neue", Arial, sans-serif;
@@ -68,7 +74,7 @@
 
   /* ---------- Topp ---------- */
   .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; padding: 18px 0 0; }
-  .brand { font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; text-decoration: none; }
+  .brand { font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; text-decoration: none; position: relative; z-index: 2; }
   .top nav { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .95rem; font-weight: 700; }
   .top nav a { text-decoration: none; border-bottom: 2px solid transparent; }
   .top nav a:hover { border-bottom-color: currentColor; }
@@ -78,15 +84,19 @@
   .hero { padding: 22px 16px 34px; text-align: center; display: flex; flex-direction: column; align-items: center; overflow-x: clip; width: 100vw; margin-left: calc(50% - 50vw); }
   .hero-top { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
   @media (min-width: 640px) {
-    .hero-top .flip .digit { width: clamp(58px, 9.6vw, 124px); height: clamp(84px, 13.4vw, 172px); font-size: clamp(4.4rem, 10vw, 9.8rem); }
+    .hero-top .flip .digit { width: clamp(58px, 8.8vw, 124px); height: clamp(84px, 12.3vw, 172px); font-size: clamp(4.4rem, 9.2vw, 9.8rem); }
     .hero .hero-top h1 .cat { font-size: clamp(2.3rem, 7vw, 6.4rem); }
   }
   @media (min-width: 980px) {
-    .hero-top .photo { position: absolute; left: 12px; top: 50%; margin: 0; width: min(500px, calc(27vw - 50px)); transform: translateY(-50%) rotate(-2.5deg); }
+    .hero-top .photo { position: absolute; left: 6px; top: 2px; margin: 0; width: min(520px, calc(32.4vw - 64px)); transform: rotate(3deg); transform-origin: 0 0; }
   }
+  @media (min-width: 1410px) { .hero-top .photo { width: min(520px, calc(50vw - 312px)); } }
   .stack { display: flex; flex-direction: column; align-items: center; max-width: 100%; }
-  .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 360px); transform: rotate(-2.5deg); background: var(--paper); background-image: var(--grain); padding: 10px 10px 14px; border: 1px solid rgba(43,36,27,.35); }
+  .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 360px); transform: rotate(-2.5deg); cursor: zoom-in; background: var(--paper); background-image: var(--grain); padding: 10px 10px 14px; border: 1px solid rgba(43,36,27,.35); }
   .photo img { display: block; width: 100%; height: auto; filter: sepia(.18) contrast(.98); }
+  .lightbox { position: fixed; inset: 0; z-index: 20; background: rgba(20,16,12,.72); display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+  .lightbox[hidden] { display: none; }
+  .lightbox .photo { margin: 0; width: min(92vw, calc((100vh - 120px) * 1.9), 1100px); transform: rotate(-1.5deg); cursor: zoom-out; }
   .tape { position: absolute; width: 96px; height: 28px; background: rgba(226,214,178,.78); background-image: var(--grain); border-left: 1px dashed rgba(43,36,27,.25); border-right: 1px dashed rgba(43,36,27,.25); z-index: 2; }
   .tape.tl { left: -26px; top: -10px; transform: rotate(-40deg); }
   .tape.tr { right: -26px; top: -10px; transform: rotate(40deg); }
@@ -118,7 +128,7 @@
   @keyframes fold { to { transform: rotateX(-90deg); } }
   @keyframes unfold { to { transform: rotateX(0deg); } }
   @media (prefers-reduced-motion: reduce) { .flap.anim { display: none; } }
-  @media (min-width: 640px) { .hero-top .flap .dg { height: clamp(84px, 13.4vw, 172px); } }
+  @media (min-width: 640px) { .hero-top .flap .dg { height: clamp(84px, 12.3vw, 172px); } }
 
 
 
@@ -306,7 +316,11 @@
     <div class="hero-top">
     <figure class="photo">
       <span class="tape tl"></span><span class="tape tr"></span>
-      <img src="og.jpg" width="1200" height="630" alt="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
+      <picture>
+        <source type="image/avif" srcset="img/tomtar-480.avif 480w, img/tomtar-800.avif 800w, img/tomtar-1200.avif 1200w" sizes="(min-width: 980px) 36vw, 90vw">
+        <source type="image/webp" srcset="img/tomtar-480.webp 480w, img/tomtar-800.webp 800w, img/tomtar-1200.webp 1200w" sizes="(min-width: 980px) 36vw, 90vw">
+        <img src="img/tomtar-800.jpg" srcset="img/tomtar-480.jpg 480w, img/tomtar-800.jpg 800w, img/tomtar-1200.jpg 1200w" sizes="(min-width: 980px) 36vw, 90vw" width="1200" height="630" decoding="async" alt="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
+      </picture>
     </figure>
     <div class="stack">
     <div class="pick">
@@ -392,6 +406,16 @@
   <div class="foot-space"></div>
 </main>
 
+<div class="lightbox" id="lightbox" hidden>
+  <figure class="photo big">
+    <span class="tape tl"></span><span class="tape tr"></span>
+    <picture>
+      <source type="image/avif" srcset="img/tomtar-1200.avif">
+      <source type="image/webp" srcset="img/tomtar-1200.webp">
+      <img src="img/tomtar-1200.jpg" width="1200" height="630" alt="">
+    </picture>
+  </figure>
+</div>
 <footer class="sticky"><span class="stitch"></span><img src="favicon.svg" alt="" width="20" height="20">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
 
 <script src="calc.js"></script>
@@ -605,6 +629,13 @@
     try { await navigator.clipboard.writeText(payload); flash('Kopierat'); }
     catch (e) { window.prompt('Kopiera texten:', payload); }
   });
+
+  const lb = $('#lightbox');
+  function openLb() { lb.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeLb() { lb.hidden = true; document.body.style.overflow = ''; }
+  document.querySelector('.hero-top .photo').addEventListener('click', openLb);
+  lb.addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
 
   function setKlam(v) { state.klam = v; try { localStorage.setItem('aj-klam', v ? '1' : '0'); } catch (e) {} render(); }
   $('#klam').addEventListener('change', e => setKlam(e.target.checked));
