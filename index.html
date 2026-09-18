@@ -94,8 +94,10 @@
   @media (min-width: 1410px) { .hero-top .photo { width: min(470px, calc(50vw - 312px)); } }
   .stack { display: flex; flex-direction: column; align-items: center; max-width: 100%; }
   .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 360px); transform: rotate(-2.5deg); cursor: zoom-in; background: var(--paper); background-image: var(--grain); padding: 10px 10px 10px; border: 1px solid rgba(43,36,27,.35); }
-  .typed { font-family: 'Reenie Beanie', 'Segoe Print', cursive; font-size: clamp(.84rem, 1.55vw, 1.02rem); line-height: 1.1; color: #232a3d; margin: 6px 3px 0; text-align: left; letter-spacing: .005em; transform: rotate(-.6deg); mix-blend-mode: multiply; text-shadow: 0 0 .4px rgba(35,42,61,.9), .3px .2px .6px rgba(35,42,61,.4); }
-  .typed b { font-weight: 400; text-shadow: .55px 0 0 rgba(35,42,61,.95), -.35px .1px 0 rgba(35,42,61,.85), 0 0 .7px rgba(35,42,61,.6); }
+  .typed { font-family: 'Reenie Beanie', 'Segoe Print', cursive; font-size: clamp(.84rem, 1.55vw, 1.02rem); line-height: 1.1; color: #1c2f6e; margin: 6px 3px 0; text-align: left; letter-spacing: .005em; transform: rotate(-.6deg); mix-blend-mode: multiply; text-shadow: 0 0 .4px rgba(28,47,110,.85), .3px .2px .6px rgba(28,47,110,.4); }
+  .typed .obs { display: block; margin-top: .15em; }
+  .typed b.red { color: #b3221c; text-shadow: .55px 0 0 rgba(179,34,28,.95), -.35px .1px 0 rgba(179,34,28,.85), 0 0 .7px rgba(179,34,28,.55); }
+  .typed b { font-weight: 400; text-shadow: .55px 0 0 rgba(28,47,110,.95), -.35px .1px 0 rgba(28,47,110,.85), 0 0 .7px rgba(28,47,110,.6); }
   .lightbox .typed { font-size: clamp(1.15rem, 1.8vw, 1.5rem); margin-top: 10px; }
   @media (max-width: 979px) { .typed { font-size: 1.05rem; } }
   .photo img { display: block; width: 100%; height: auto; filter: sepia(.18) contrast(.98); }
@@ -326,7 +328,7 @@
         <source type="image/webp" srcset="img/tomtar-480.webp 480w, img/tomtar-800.webp 800w, img/tomtar-1200.webp 1200w" sizes="(min-width: 980px) 36vw, 90vw">
         <img src="img/tomtar-800.jpg" srcset="img/tomtar-480.jpg 480w, img/tomtar-800.jpg 800w, img/tomtar-1200.jpg 1200w" sizes="(min-width: 980px) 36vw, 90vw" width="1200" height="630" decoding="async" alt="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
       </picture>
-      <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
+      <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm.<span class="obs"><b class="red">OBS:</b> Bilden är ett falsarium.</span></figcaption>
     </figure>
     <div class="stack">
     <div class="pick">
@@ -420,7 +422,7 @@
       <source type="image/webp" srcset="img/tomtar-1200.webp">
       <img src="img/tomtar-1200.jpg" width="1200" height="630" alt="">
     </picture>
-    <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
+    <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm.<span class="obs"><b class="red">OBS:</b> Bilden är ett falsarium.</span></figcaption>
   </figure>
 </div>
 <footer class="sticky"><span class="stitch"></span><img src="favicon.svg" alt="" width="20" height="20">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
