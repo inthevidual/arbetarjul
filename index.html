@@ -82,7 +82,7 @@
 
   /* ---------- Hero ---------- */
   .hero { padding: 22px 16px 34px; text-align: center; display: flex; flex-direction: column; align-items: center; overflow-x: clip; width: 100vw; margin-left: calc(50% - 50vw); }
-  @font-face { font-family: 'Special Elite'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/special-elite-400-latin.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Reenie Beanie'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/reenie-beanie-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   .hero-top { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
   @media (min-width: 640px) {
     .hero-top .flip .digit { width: clamp(58px, 8.8vw, 124px); height: clamp(84px, 12.3vw, 172px); font-size: clamp(4.4rem, 9.2vw, 9.8rem); }
@@ -94,10 +94,10 @@
   @media (min-width: 1410px) { .hero-top .photo { width: min(470px, calc(50vw - 312px)); } }
   .stack { display: flex; flex-direction: column; align-items: center; max-width: 100%; }
   .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 360px); transform: rotate(-2.5deg); cursor: zoom-in; background: var(--paper); background-image: var(--grain); padding: 10px 10px 10px; border: 1px solid rgba(43,36,27,.35); }
-  .typed { font-family: 'Special Elite', 'Courier New', monospace; font-size: clamp(.56rem, 1.15vw, .68rem); line-height: 1.28; color: #2b2520; margin: 7px 2px 1px; text-align: left; letter-spacing: .01em; mix-blend-mode: multiply; text-shadow: 0 0 .45px rgba(43,37,32,.9), .35px .25px .6px rgba(43,37,32,.45), -.2px .4px 1.4px rgba(43,37,32,.22); filter: contrast(1.05); }
-  .typed b { font-weight: 400; text-shadow: .5px 0 0 rgba(43,37,32,.95), -.3px 0 0 rgba(43,37,32,.8), 0 0 .8px rgba(43,37,32,.6), .4px .3px 1.6px rgba(43,37,32,.35); }
-  .lightbox .typed { font-size: clamp(.8rem, 1.3vw, 1.05rem); margin-top: 12px; }
-  @media (max-width: 979px) { .typed { font-size: .74rem; } }
+  .typed { font-family: 'Reenie Beanie', 'Segoe Print', cursive; font-size: clamp(.84rem, 1.55vw, 1.02rem); line-height: 1.1; color: #232a3d; margin: 6px 3px 0; text-align: left; letter-spacing: .005em; transform: rotate(-.6deg); mix-blend-mode: multiply; text-shadow: 0 0 .4px rgba(35,42,61,.9), .3px .2px .6px rgba(35,42,61,.4); }
+  .typed b { font-weight: 400; text-shadow: .55px 0 0 rgba(35,42,61,.95), -.35px .1px 0 rgba(35,42,61,.85), 0 0 .7px rgba(35,42,61,.6); }
+  .lightbox .typed { font-size: clamp(1.15rem, 1.8vw, 1.5rem); margin-top: 10px; }
+  @media (max-width: 979px) { .typed { font-size: 1.05rem; } }
   .photo img { display: block; width: 100%; height: auto; filter: sepia(.18) contrast(.98); }
   .lightbox { position: fixed; inset: 0; z-index: 20; background: rgba(20,16,12,.72); display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
   .lightbox[hidden] { display: none; }
@@ -326,7 +326,7 @@
         <source type="image/webp" srcset="img/tomtar-480.webp 480w, img/tomtar-800.webp 800w, img/tomtar-1200.webp 1200w" sizes="(min-width: 980px) 36vw, 90vw">
         <img src="img/tomtar-800.jpg" srcset="img/tomtar-480.jpg 480w, img/tomtar-800.jpg 800w, img/tomtar-1200.jpg 1200w" sizes="(min-width: 980px) 36vw, 90vw" width="1200" height="630" decoding="async" alt="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
       </picture>
-      <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under juldagen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
+      <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
     </figure>
     <div class="stack">
     <div class="pick">
@@ -420,7 +420,7 @@
       <source type="image/webp" srcset="img/tomtar-1200.webp">
       <img src="img/tomtar-1200.jpg" width="1200" height="630" alt="">
     </picture>
-    <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under juldagen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
+    <figcaption class="typed">Fr. v.: Sture Eskilsson, i <b>SAF</b>fransgult, Daniel Suhonen i djuprött, och Mikael Damberg i gråsossegrått, röker under julgranen, någon gång under det tidiga 80-tal de alla mindes med varierande grad av realism och entusiasm. <b>OBS:</b> Bilden är ett falsarium.</figcaption>
   </figure>
 </div>
 <footer class="sticky"><span class="stitch"></span><img src="favicon.svg" alt="" width="20" height="20">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
