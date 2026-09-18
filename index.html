@@ -336,7 +336,7 @@
       <div class="flip" id="bigYear" aria-hidden="true"></div>
       <button type="button" class="arrow" id="yearDown" aria-label="Föregående år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 6l18 18L40 6"/></svg></button>
     </div>
-    <h1 id="headline"><span class="sr yr"></span><span class="aren">är en</span><span class="cat"></span></h1>
+    <h1 id="headline"><span class="sr yr"></span><span class="aren">blir en</span><span class="cat"></span></h1>
     <div class="count" id="count"></div>
     <div class="hero-actions">
       <label class="klam-toggle">
@@ -492,13 +492,17 @@
   }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Julen y räknas som avslutad efter 7 januari y+1
+  function verb(y) { const end = A.d(y + 1, 1, 7); return Date.now() > end.getTime() + 86400000 ? 'var' : 'blir'; }
+
   function render() {
     const y = state.year, k = state.klam;
     const cat = A.category(y, k);
     const jc = A.julCount(y, k);
     document.body.dataset.cat = cat.key;
     $('#themeColor').setAttribute('content', THEME[cat.key]);
-    document.title = `${y} är ${cat.def} – Arbetarjul`;
+    document.title = `${y} ${verb(y)} ${cat.def} – Arbetarjul`;
+    $('#headline .aren').textContent = verb(y) + ' en';
     $('#klam').checked = k; $('#klam2').checked = k;
 
     // Hero
@@ -625,7 +629,7 @@
   const SITE = 'https://arbetarjul.cptjanst.se/';
   function shareText() {
     const y = state.year, cat = A.category(y, state.klam), n = A.julCount(y, state.klam).total;
-    return { title: `${y} är ${cat.def}`, text: `${y} är ${cat.def} (${dagar(n)}${state.klam ? ', inkl. klämdagar' : ''}).`, url: SITE + '#' + y };
+    return { title: `${y} ${verb(y)} ${cat.def}`, text: `${y} ${verb(y)} ${cat.def} (${dagar(n)}${state.klam ? ', inkl. klämdagar' : ''}).`, url: SITE + '#' + y };
   }
   const shareBtn = $('#share'), shareLabel = shareBtn.querySelector('span');
   function flash(msg) { shareLabel.textContent = msg; shareBtn.classList.add('done'); setTimeout(() => { shareLabel.textContent = 'Dela'; shareBtn.classList.remove('done'); }, 2200); }
