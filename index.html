@@ -35,19 +35,19 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Nunito:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
     --font-display: "Abril Fatface", "Bodoni MT", Georgia, serif;
-    --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Nunito", "Helvetica Neue", Arial, sans-serif;
     --red: #C4161C; --red-ink: #FFF1DC; --red-deep: #8A0E13;
     --grey: #D3D0C8; --grey-ink: #1C1B19; --grey-deep: #3A3936;
     --saff: #F3B400; --saff-ink: #241A00; --saff-deep: #4A3100;
     --max: 1120px;
   }
-  body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #E3E1DA; --hatch: #1C1B19; --card: rgba(255,255,255,.42); }
-  body[data-cat="arbetar"]  { --bg: var(--red);  --ink: var(--red-ink);  --panel: var(--red-deep);  --panel-ink: #FFF1DC; --soft: #D2383D; --hatch: #FFF1DC; --card: rgba(0,0,0,.2); }
-  body[data-cat="arbetsgivar"] { --bg: var(--saff); --ink: var(--saff-ink); --panel: var(--saff-deep); --panel-ink: #FFE49A; --soft: #F8C93C; --hatch: #241A00; --card: rgba(255,255,255,.38); }
+  body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #E3E1DA; --hatch: #1C1B19; --card: rgba(255,255,255,.72); --card-line: rgba(28,27,25,.25); }
+  body[data-cat="arbetar"]  { --bg: var(--red);  --ink: var(--red-ink);  --panel: var(--red-deep);  --panel-ink: #FFF1DC; --soft: #D2383D; --hatch: #FFF1DC; --card: rgba(0,0,0,.34); --card-line: rgba(255,241,220,.3); }
+  body[data-cat="arbetsgivar"] { --bg: var(--saff); --ink: var(--saff-ink); --panel: var(--saff-deep); --panel-ink: #FFE49A; --soft: #F8C93C; --hatch: #241A00; --card: rgba(255,255,255,.62); --card-line: rgba(36,26,0,.25); }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -70,14 +70,29 @@
 
   /* ---------- Hero ---------- */
   .hero { padding: 22px 0 32px; border-bottom: 6px solid var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .pick { display: flex; flex-direction: column; align-items: center; }
-  .arrow { all: unset; cursor: pointer; width: 64px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
-  .arrow svg { width: 44px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
-  .arrow:hover svg { transform: scale(1.15); }
-  .arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-  .arrow[disabled] { opacity: .25; cursor: default; }
-  .arrow[disabled]:hover svg { transform: none; }
-  .bigyear { font-family: var(--font-display); font-weight: 400; font-size: clamp(5rem, 22vw, 12rem); line-height: .9; letter-spacing: -.01em; user-select: none; margin: 2px 0; }
+  .pick { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .arrow { all: unset; cursor: pointer; width: 60px; height: 60px; border-radius: 50%; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,.28); transition: transform .12s, box-shadow .12s; }
+  .arrow svg { width: 28px; height: 20px; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  .arrow:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,.28); }
+  .arrow:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.28); }
+  .arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  .arrow[disabled] { opacity: .3; cursor: default; transform: none; box-shadow: 0 4px 0 rgba(0,0,0,.28); }
+  .flip { display: flex; gap: clamp(4px, 1.2vw, 10px); perspective: 900px; user-select: none; }
+  .digit {
+    position: relative; width: clamp(58px, 17vw, 132px); height: clamp(84px, 24vw, 184px);
+    background: var(--panel); color: var(--panel-ink); border-radius: clamp(8px, 1.6vw, 14px);
+    font-family: var(--font-display); font-size: clamp(4.4rem, 18.5vw, 10.5rem); line-height: 1;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    box-shadow: 0 6px 0 rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);
+    transform-style: preserve-3d;
+  }
+  .digit::before, .digit::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; pointer-events: none; }
+  .digit::before { height: 3px; margin-top: -1px; background: var(--bg); opacity: .95; }
+  .digit::after { top: 0; bottom: 50%; background: linear-gradient(rgba(255,255,255,.09), rgba(255,255,255,0)); }
+  .digit .dg { position: relative; top: .04em; }
+  .digit.flipping { animation: flip .38s ease-in-out; }
+  @keyframes flip { 0% { transform: rotateX(0); } 50% { transform: rotateX(-88deg); } 100% { transform: rotateX(0); } }
+  @media (prefers-reduced-motion: reduce) { .digit.flipping { animation: none; } }
   .hero h1 { margin: 6px 0 0; font-weight: 400; line-height: .95; }
   .hero h1 .aren { display: block; font-family: var(--font-body); font-weight: 700; font-size: clamp(1rem, 2.4vw, 1.4rem); text-transform: none; letter-spacing: .02em; margin-bottom: 6px; }
   .hero h1 .cat { display: block; font-family: var(--font-display); font-size: clamp(2.3rem, 8.4vw, 6.4rem); letter-spacing: 0; line-height: 1; word-break: break-word; }
@@ -105,7 +120,10 @@
   .switch input:checked + span::after { background: var(--bg); transform: translateX(24px); }
   .switch input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  .card { background: var(--card); border-radius: 12px; padding: 20px 22px; }
+  .card { background: var(--card); border: 2px solid var(--card-line); border-radius: 12px; padding: 20px 22px; }
+  .intro { max-width: 760px; width: 100%; margin-top: 18px; }
+  .intro .tagline, .intro .weekday { margin: 0 auto; }
+  .intro .weekday { margin-top: 8px; }
   .neighbours { display: grid; grid-template-columns: 1fr; gap: 16px 36px; margin-top: 28px; font-size: 1rem; text-align: left; width: 100%; max-width: 860px; }
   @media (min-width: 640px) { .neighbours { grid-template-columns: 1fr 1fr; } }
   .neighbours p { margin: 0 0 5px; }
@@ -182,7 +200,7 @@
   .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .8rem; font-weight: 700; border: 2px solid var(--ink); white-space: nowrap; }
   .pill.on { background: var(--ink); color: var(--bg); }
   .foot { font-size: .9rem; margin: 14px 0 0; max-width: 70ch; }
-  @media (max-width: 640px) { .hide-m { display: none; } table { font-size: .9rem; } }
+  @media (max-width: 640px) { .hide-m { display: none; } table { font-size: .84rem; } th, td { padding-right: 6px; } .pill { font-size: .72rem; padding: 1px 6px; } td.num, th.num { font-size: 1rem; } .card { overflow-x: auto; } }
 
   /* ---------- Toppar & dalar ---------- */
   .controls { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; margin: 4px 0 22px; }
@@ -239,7 +257,7 @@
   <div class="hero">
     <div class="pick">
       <button type="button" class="arrow" id="yearUp" aria-label="Nästa år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 24 22 6l18 18"/></svg></button>
-      <div class="bigyear" id="bigYear" aria-hidden="true"></div>
+      <div class="flip" id="bigYear" aria-hidden="true"></div>
       <button type="button" class="arrow" id="yearDown" aria-label="Föregående år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 6l18 18L40 6"/></svg></button>
     </div>
     <h1 id="headline"><span class="sr yr"></span><span class="aren">är en</span><span class="cat"></span></h1>
@@ -254,8 +272,10 @@
         <span>Dela</span>
       </button>
     </div>
-    <p class="tagline" id="tagline"></p>
-    <p class="weekday" id="weekdayText"></p>
+    <div class="card intro">
+      <p class="tagline" id="tagline"></p>
+      <p class="weekday" id="weekdayText"></p>
+    </div>
     <div class="neighbours card" id="neighbours"></div>
   </div>
 
@@ -351,6 +371,24 @@
   function setYear(y) { if (y < MIN || y > MAX) return; state.year = y; history.replaceState(null, '', '#' + y); render(); }
   function yearLink(y) { return `<button type="button" data-goto="${y}">${y}</button>`; }
 
+  const flipEl = $('#bigYear');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setFlip(y) {
+    const str = String(y);
+    if (flipEl.children.length !== str.length) {
+      flipEl.innerHTML = str.split('').map(c => `<span class="digit"><span class="dg">${c}</span></span>`).join('');
+      return;
+    }
+    [...flipEl.children].forEach((d, i) => {
+      const dg = d.firstElementChild;
+      if (dg.textContent === str[i]) return;
+      if (reduce) { dg.textContent = str[i]; return; }
+      d.classList.remove('flipping'); void d.offsetWidth; d.classList.add('flipping');
+      setTimeout(() => { dg.textContent = str[i]; }, 190);
+      d.addEventListener('animationend', () => d.classList.remove('flipping'), { once: true });
+    });
+  }
+
   function render() {
     const y = state.year, k = state.klam;
     const cat = A.category(y, k);
@@ -362,7 +400,7 @@
 
     // Hero
     $('#headline .yr').textContent = y + ' ';
-    $('#bigYear').textContent = y;
+    setFlip(y);
     $('#yearUp').disabled = y >= MAX; $('#yearDown').disabled = y <= MIN;
     $('#headline .cat').textContent = cat.name;
     $('#count').innerHTML = `(${dagar(jc.total)}) <small>${k ? 'inkl.' : 'exkl.'} klämdagar</small>`;
