@@ -45,6 +45,7 @@
     --saff: #F3B400; --saff-ink: #241A00; --saff-deep: #4A3100;
     --max: 1120px;
     --paper: #F4ECDA; --paper-ink: #2B241B; --redink: #A8231F;
+    --grain2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #E3E1DA; --hatch: #1C1B19; --card: rgba(255,255,255,.72); --card-line: rgba(28,27,25,.25); }
@@ -66,25 +67,24 @@
   @media (min-width: 720px) { .wrap { padding: 0 32px; } }
 
   /* ---------- Topp ---------- */
-  .top { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 0; }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; padding: 18px 0 0; }
   .brand { font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; text-decoration: none; }
-  .top nav { display: flex; gap: 14px; font-size: .95rem; }
+  .top nav { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .95rem; font-weight: 700; }
   .top nav a { text-decoration: none; border-bottom: 2px solid transparent; }
   .top nav a:hover { border-bottom-color: currentColor; }
 
   /* ---------- Hero ---------- */
-  .hero { padding: 22px 0 34px; border-bottom: 5px double var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; overflow-x: clip; }
-  .hero-top { display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
-  @media (min-width: 900px) {
-    .hero-top { flex-direction: row; align-items: center; justify-content: center; gap: 56px; }
-    .hero-top .stack { flex: 1 1 auto; min-width: 0; max-width: 720px; }
-    .photo { flex: 0 0 min(36%, 420px); }
-    .hero .hero-top h1 .cat { font-size: clamp(2.3rem, 6.4vw, 5.7rem); word-break: normal; }
-    .hero-top .stack .count { font-size: clamp(1.5rem, 3.2vw, 2.6rem); }
-    .hero-top .flip .digit { width: clamp(58px, 8.6vw, 124px); height: clamp(84px, 12vw, 172px); font-size: clamp(4.4rem, 9vw, 9.8rem); }
+  .hero { padding: 22px 16px 34px; border-bottom: 5px double var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; overflow-x: clip; width: 100vw; margin-left: calc(50% - 50vw); }
+  .hero-top { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
+  @media (min-width: 640px) {
+    .hero-top .flip .digit { width: clamp(58px, 9.6vw, 124px); height: clamp(84px, 13.4vw, 172px); font-size: clamp(4.4rem, 10vw, 9.8rem); }
+    .hero .hero-top h1 .cat { font-size: clamp(2.3rem, 7vw, 6.4rem); }
   }
-  .stack { display: flex; flex-direction: column; align-items: center; }
-  .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 440px); transform: rotate(-2.5deg); background: var(--paper); background-image: var(--grain); padding: 10px 10px 14px; border: 1px solid rgba(43,36,27,.35); }
+  @media (min-width: 1160px) {
+    .hero-top .photo { position: absolute; left: 12px; top: 50%; margin: 0; width: min(440px, calc(50vw - 372px)); transform: translateY(-50%) rotate(-2.5deg); }
+  }
+  .stack { display: flex; flex-direction: column; align-items: center; max-width: 100%; }
+  .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 360px); transform: rotate(-2.5deg); background: var(--paper); background-image: var(--grain); padding: 10px 10px 14px; border: 1px solid rgba(43,36,27,.35); }
   .photo img { display: block; width: 100%; height: auto; filter: sepia(.18) contrast(.98); }
   .tape { position: absolute; width: 96px; height: 28px; background: rgba(226,214,178,.78); background-image: var(--grain); border-left: 1px dashed rgba(43,36,27,.25); border-right: 1px dashed rgba(43,36,27,.25); z-index: 2; }
   .tape.tl { left: -26px; top: -10px; transform: rotate(-40deg); }
@@ -99,25 +99,22 @@
   .arrow:active { transform: scale(.96); }
   .arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
   .arrow[disabled] { opacity: .3; cursor: default; transform: none; }
-  .flip { display: flex; gap: clamp(4px, 1.2vw, 10px); perspective: 900px; user-select: none; padding: clamp(6px, 1.4vw, 12px); border-radius: 10px;
-    background: #1d1a16; background-image: var(--grain); border: 1px solid #0c0b09; }
+  .flip { display: flex; gap: clamp(6px, 1.6vw, 14px); user-select: none; padding: 6px 4px 12px; }
   .digit {
     position: relative; width: clamp(58px, 17vw, 132px); height: clamp(84px, 24vw, 184px);
-    background: var(--panel); color: var(--panel-ink); border-radius: 6px;
-    font-family: var(--font-display); font-size: clamp(4.4rem, 18.5vw, 10.5rem); line-height: 1;
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
-    background-image: var(--grain);
-    border: 1px solid rgba(0,0,0,.5);
+    font-family: var(--font-display); font-size: clamp(4.4rem, 18.5vw, 10.5rem); line-height: 1; color: #241c14;
   }
-  .digit .pin { position: absolute; top: 50%; width: 6px; height: 16px; margin-top: -8px; background: #3a342d; border-radius: 1px; z-index: 2; }
-  .digit .pin.l { left: -1px; } .digit .pin.r { right: -1px; }
-  .digit::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1px; background: #100e0c; border-bottom: 1px solid rgba(255,255,255,.18); z-index: 1; pointer-events: none; }
-  .digit .half { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .digit .half.top { clip-path: inset(0 0 50% 0); }
-  .digit .half.bot { clip-path: inset(50% 0 0 0); transform: translateY(2px); background: rgba(0,0,0,.09); }
-  .digit::after { display: none; }
-  .digit .dg { position: relative; top: .04em; }
-  .digit .half .dg { top: .04em; }
+  .flap {
+    position: absolute; left: 0; right: 0; overflow: hidden;
+    background-color: #EFE5CF; background-image: var(--grain2), var(--grain);
+    box-shadow: 0 1px 1px rgba(0,0,0,.22), 0 3px 5px rgba(0,0,0,.2), 0 10px 18px -8px rgba(0,0,0,.45);
+  }
+  .flap.up { top: 0; bottom: calc(50% + 2px); border-radius: 5px 5px 2px 2px; box-shadow: 0 1px 1px rgba(0,0,0,.22), 0 3px 5px rgba(0,0,0,.2), 0 10px 18px -8px rgba(0,0,0,.45), inset 0 -1px 0 rgba(0,0,0,.06); }
+  .flap.down { top: calc(50% + 2px); bottom: 0; border-radius: 2px 2px 5px 5px; background-color: #E9DEC6; box-shadow: 0 1px 1px rgba(0,0,0,.22), 0 3px 5px rgba(0,0,0,.2), 0 10px 18px -8px rgba(0,0,0,.45), inset 0 3px 4px -1px rgba(0,0,0,.28); }
+  .flap .dg { position: absolute; left: 0; width: 100%; height: clamp(84px, 24vw, 184px); display: flex; align-items: center; justify-content: center; padding-top: .06em; box-sizing: border-box; mix-blend-mode: multiply; text-shadow: 0 0 .5px rgba(36,28,20,.95), 0 0 1.5px rgba(36,28,20,.45), 0 0 4px rgba(36,28,20,.18); }
+  .flap.up .dg { top: 0; }
+  .flap.down .dg { bottom: 0; transform: translateY(1px); }
+  @media (min-width: 640px) { .hero-top .flap .dg { height: clamp(84px, 13.4vw, 172px); } }
 
 
 
@@ -288,8 +285,8 @@
   <a class="brand" href="#" id="brandLink">Arbetarjul</a>
   <nav>
     <a href="#kalender">Julen dag för dag</a>
-    <a href="#aret" class="hide-m">Hela året</a>
-    <a href="#toppar" class="hide-m">Toppar &amp; dalar</a>
+    <a href="#aret">Hela året</a>
+    <a href="#toppar">Toppar &amp; dalar</a>
     <a href="#metod">Så räknar vi</a>
   </nav>
 </header>
@@ -431,7 +428,7 @@
   function setFlip(y) {
     const str = String(y);
     if (flipEl.children.length !== str.length) {
-      flipEl.innerHTML = str.split('').map(c => `<span class="digit"><span class="pin l"></span><span class="half top"><span class="dg">${c}</span></span><span class="half bot"><span class="dg">${c}</span></span><span class="pin r"></span></span>`).join('');
+      flipEl.innerHTML = str.split('').map(c => `<span class="digit"><span class="flap up"><span class="dg">${c}</span></span><span class="flap down"><span class="dg">${c}</span></span></span>`).join('');
       return;
     }
     [...flipEl.children].forEach((d, i) => { d.querySelectorAll('.dg').forEach(x => { x.textContent = str[i]; }); });
