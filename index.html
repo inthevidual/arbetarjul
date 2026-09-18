@@ -6,11 +6,32 @@
 <title>Arbetarjul</title>
 <meta name="description" content="Är det en arbetarjul, gråsossejul eller arbetsgivarjul i år? Ledighetsutfallet för svenska röda dagar och klämdagar, år för år.">
 <meta name="theme-color" content="#B3B0A7" id="themeColor">
+<link rel="canonical" href="https://arbetarjul.cptjanst.se/">
+<meta property="og:site_name" content="Arbetarjul">
 <meta property="og:title" content="Arbetarjul">
-<meta property="og:description" content="Vilken sorts jul blir det i år? Arbetarjul, gråsossejul eller arbetsgivarjul – och hur många lediga dagar det ger.">
+<meta property="og:description" content="Vilken sorts jul blir det i år? Arbetarjul, gråsossejul eller arbetsgivarjul, och hur många lediga dagar det ger.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arbetarjul.cptjanst.se/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23C4161C'/%3E%3Ctext x='32' y='50' font-family='Impact,Arial Black,sans-serif' font-size='48' font-weight='900' fill='%23FFF1DC' text-anchor='middle'%3EAJ%3C/text%3E%3C/svg%3E">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:image" content="https://arbetarjul.cptjanst.se/og.jpg">
+<meta property="og:image:secure_url" content="https://arbetarjul.cptjanst.se/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
+<meta property="og:image" content="https://arbetarjul.cptjanst.se/og-square.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1080">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arbetarjul">
+<meta name="twitter:description" content="Vilken sorts jul blir det i år? Arbetarjul, gråsossejul eller arbetsgivarjul, och hur många lediga dagar det ger.">
+<meta name="twitter:image" content="https://arbetarjul.cptjanst.se/og.jpg">
+<meta name="twitter:image:alt" content="Tre tomtar i gul, röd och grå dräkt framför en julgran.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Familjen+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -61,7 +82,13 @@
   .hero .count small { font-size: .55em; font-weight: 600; }
   .tagline { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 62ch; margin: 10px 0 0; font-weight: 600; }
   .weekday { max-width: 66ch; margin: 8px 0 0; }
-  .klam-toggle { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; cursor: pointer; user-select: none; font-weight: 600; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 22px; }
+  .klam-toggle { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; font-weight: 600; }
+  .share { display: inline-flex; align-items: center; gap: 8px; font: 700 1rem var(--font-body); color: var(--ink); background: transparent; border: 3px solid var(--ink); border-radius: 999px; padding: 6px 16px 6px 12px; cursor: pointer; }
+  .share:hover { background: var(--ink); color: var(--bg); }
+  .share:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .share svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .share.done { background: var(--ink); color: var(--bg); }
   .switch { position: relative; width: 54px; height: 30px; flex: none; }
   .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
   .switch span { position: absolute; inset: 0; border: 3px solid var(--ink); border-radius: 30px; transition: background .2s; }
@@ -203,10 +230,16 @@
   <div class="hero">
     <h1 id="headline"><span class="yr"></span> är en <span class="cat"></span></h1>
     <div class="count" id="count"></div>
-    <label class="klam-toggle">
-      <span class="switch"><input type="checkbox" id="klam" checked><span></span></span>
-      <span>Räkna med klämdagar</span>
-    </label>
+    <div class="hero-actions">
+      <label class="klam-toggle">
+        <span class="switch"><input type="checkbox" id="klam" checked><span></span></span>
+        <span>Räkna med klämdagar</span>
+      </label>
+      <button type="button" class="share" id="share" aria-live="polite">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v13M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>
+        <span>Dela</span>
+      </button>
+    </div>
     <p class="tagline" id="tagline"></p>
     <p class="weekday" id="weekdayText"></p>
     <div class="neighbours" id="neighbours"></div>
@@ -439,6 +472,23 @@
 
     nb.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => setYear(parseInt(b.dataset.goto, 10))));
   }
+
+  const SITE = 'https://arbetarjul.cptjanst.se/';
+  function shareText() {
+    const y = state.year, cat = A.category(y, state.klam), n = A.julCount(y, state.klam).total;
+    return { title: `${y} är ${cat.def}`, text: `${y} är ${cat.def} (${dagar(n)}${state.klam ? ', inkl. klämdagar' : ''}).`, url: SITE + '#' + y };
+  }
+  const shareBtn = $('#share'), shareLabel = shareBtn.querySelector('span');
+  function flash(msg) { shareLabel.textContent = msg; shareBtn.classList.add('done'); setTimeout(() => { shareLabel.textContent = 'Dela'; shareBtn.classList.remove('done'); }, 2200); }
+  shareBtn.addEventListener('click', async () => {
+    const d = shareText();
+    if (navigator.share) {
+      try { await navigator.share(d); flash('Delat'); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    const payload = `${d.text} ${d.url}`;
+    try { await navigator.clipboard.writeText(payload); flash('Kopierat'); }
+    catch (e) { window.prompt('Kopiera texten:', payload); }
+  });
 
   function setKlam(v) { state.klam = v; try { localStorage.setItem('aj-klam', v ? '1' : '0'); } catch (e) {} render(); }
   $('#klam').addEventListener('change', e => setKlam(e.target.checked));
