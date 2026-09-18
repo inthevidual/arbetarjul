@@ -73,7 +73,22 @@
   .top nav a:hover { border-bottom-color: currentColor; }
 
   /* ---------- Hero ---------- */
-  .hero { padding: 22px 0 34px; border-bottom: 5px double var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero { padding: 22px 0 34px; border-bottom: 5px double var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; overflow-x: clip; }
+  .hero-top { display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
+  @media (min-width: 900px) {
+    .hero-top { flex-direction: row; align-items: center; justify-content: center; gap: 56px; }
+    .hero-top .stack { flex: 1 1 auto; min-width: 0; max-width: 720px; }
+    .photo { flex: 0 0 min(36%, 420px); }
+    .hero h1 .cat { font-size: clamp(2.3rem, 6.2vw, 6.4rem); }
+    .hero .count { font-size: clamp(1.5rem, 3.2vw, 2.6rem); }
+    .digit { width: clamp(58px, 9.2vw, 124px); height: clamp(84px, 13vw, 172px); font-size: clamp(4.4rem, 9.8vw, 9.8rem); }
+  }
+  .stack { display: flex; flex-direction: column; align-items: center; }
+  .photo { margin: 18px 0 6px; position: relative; width: min(100% - 36px, 440px); transform: rotate(-2.5deg); background: var(--paper); background-image: var(--grain); padding: 10px 10px 14px; border: 1px solid rgba(43,36,27,.35); }
+  .photo img { display: block; width: 100%; height: auto; filter: sepia(.18) contrast(.98); }
+  .tape { position: absolute; width: 96px; height: 28px; background: rgba(226,214,178,.78); background-image: var(--grain); border-left: 1px dashed rgba(43,36,27,.25); border-right: 1px dashed rgba(43,36,27,.25); z-index: 2; }
+  .tape.tl { left: -26px; top: -10px; transform: rotate(-40deg); }
+  .tape.tr { right: -26px; top: -10px; transform: rotate(40deg); }
   .pick { display: flex; flex-direction: column; align-items: center; gap: 12px; }
   .arrow { all: unset; cursor: pointer; width: 60px; height: 60px; border-radius: 50%; color: var(--bg); display: flex; align-items: center; justify-content: center;
     background: var(--ink); background-image: var(--grain);
@@ -96,10 +111,13 @@
   }
   .digit .pin { position: absolute; top: 50%; width: 6px; height: 16px; margin-top: -8px; background: #3a342d; border-radius: 1px; z-index: 2; }
   .digit .pin.l { left: -1px; } .digit .pin.r { right: -1px; }
-  .digit::before, .digit::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; pointer-events: none; }
-  .digit::before { height: 3px; margin-top: -1px; background: #0e0c0a; z-index: 1; }
+  .digit::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1px; background: #100e0c; border-bottom: 1px solid rgba(255,255,255,.18); z-index: 1; pointer-events: none; }
+  .digit .half { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .digit .half.top { clip-path: inset(0 0 50% 0); }
+  .digit .half.bot { clip-path: inset(50% 0 0 0); transform: translateY(2px); background: rgba(0,0,0,.09); }
   .digit::after { display: none; }
   .digit .dg { position: relative; top: .04em; }
+  .digit .half .dg { top: .04em; }
 
 
 
@@ -156,8 +174,7 @@
   /* ---------- Sektioner ---------- */
   section { padding: 36px 0 40px; border-bottom: 4px double var(--ink); }
   section:last-of-type { border-bottom: 0; }
-  h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 4.2vw, 2.7rem); line-height: 1.05; margin: 0; }
-  h2::after { content: ""; display: block; width: 72px; height: 5px; margin-top: 10px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 4.2vw, 2.7rem); line-height: 1.05; margin: 0 0 4px; }
   .lede { margin: 0 0 20px; max-width: 66ch; font-size: 1.05rem; }
   .lede b { font-weight: 700; }
 
@@ -216,7 +233,7 @@
   table { width: 100%; border-collapse: collapse; font-size: .97rem; }
   th, td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--ink); vertical-align: top; }
   th { font-weight: 700; font-size: .85rem; border-bottom-width: 3px; }
-  td.num, th.num { text-align: right; padding-right: 0; font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; white-space: nowrap; }
+  td.num, th.num { text-align: right; padding-right: 0; font-family: var(--font-body); font-weight: 800; font-size: 1.15rem; white-space: nowrap; }
   tr.lost td { opacity: .6; }
   tr.always td { opacity: .45; }
   tr.total td { border-bottom: 0; border-top: 3px solid var(--ink); font-weight: 700; padding-top: 12px; }
@@ -279,6 +296,12 @@
 
 <main class="wrap">
   <div class="hero">
+    <div class="hero-top">
+    <figure class="photo">
+      <span class="tape tl"></span><span class="tape tr"></span>
+      <img src="og.jpg" width="1200" height="630" alt="Tre tomtar i gul, röd och grå dräkt ligger framför en julgran: arbetsgivarjul, arbetarjul och gråsossejul.">
+    </figure>
+    <div class="stack">
     <div class="pick">
       <button type="button" class="arrow" id="yearUp" aria-label="Nästa år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 24 22 6l18 18"/></svg></button>
       <div class="flip" id="bigYear" aria-hidden="true"></div>
@@ -295,6 +318,8 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v13M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>
         <span>Dela</span>
       </button>
+    </div>
+    </div>
     </div>
     <div class="card intro">
       <p class="tagline" id="tagline"></p>
@@ -406,10 +431,10 @@
   function setFlip(y) {
     const str = String(y);
     if (flipEl.children.length !== str.length) {
-      flipEl.innerHTML = str.split('').map(c => `<span class="digit"><span class="pin l"></span><span class="dg">${c}</span><span class="pin r"></span></span>`).join('');
+      flipEl.innerHTML = str.split('').map(c => `<span class="digit"><span class="pin l"></span><span class="half top"><span class="dg">${c}</span></span><span class="half bot"><span class="dg">${c}</span></span><span class="pin r"></span></span>`).join('');
       return;
     }
-    [...flipEl.children].forEach((d, i) => { d.querySelector('.dg').textContent = str[i]; });
+    [...flipEl.children].forEach((d, i) => { d.querySelectorAll('.dg').forEach(x => { x.textContent = str[i]; }); });
   }
 
   function render() {
