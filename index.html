@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arbetarjul</title>
+<meta name="description" content="Är det en arbetarjul, gråsossejul eller arbetsgivarjul i år? Ledighetsutfallet för svenska röda dagar och klämdagar, år för år.">
+<meta name="theme-color" content="#B3B0A7" id="themeColor">
+<meta property="og:title" content="Arbetarjul">
+<meta property="og:description" content="Vilken sorts jul blir det i år? Arbetarjul, gråsossejul eller arbetsgivarjul – och hur många lediga dagar det ger.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arbetarjul.cptjanst.se/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23C4161C'/%3E%3Ctext x='32' y='50' font-family='Impact,Arial Black,sans-serif' font-size='48' font-weight='900' fill='%23FFF1DC' text-anchor='middle'%3EAJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Familjen+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --font-body: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --red: #C4161C; --red-ink: #FFF1DC; --red-deep: #8A0E13;
+    --grey: #B3B0A7; --grey-ink: #1C1B19; --grey-deep: #3A3936;
+    --saff: #F3B400; --saff-ink: #241A00; --saff-deep: #4A3100;
+    --max: 1120px;
+  }
+  body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #C9C6BE; --hatch: #1C1B19; }
+  body[data-cat="arbetar"]  { --bg: var(--red);  --ink: var(--red-ink);  --panel: var(--red-deep);  --panel-ink: #FFF1DC; --soft: #D2383D; --hatch: #FFF1DC; }
+  body[data-cat="arbetsgivar"] { --bg: var(--saff); --ink: var(--saff-ink); --panel: var(--saff-deep); --panel-ink: #FFE49A; --soft: #F8C93C; --hatch: #241A00; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.5;
+    transition: background-color .35s ease, color .35s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* ---------- Topp ---------- */
+  .top { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 0; }
+  .brand { font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; letter-spacing: .01em; text-transform: uppercase; text-decoration: none; }
+  .top nav { display: flex; gap: 14px; font-size: .95rem; }
+  .top nav a { text-decoration: none; border-bottom: 2px solid transparent; }
+  .top nav a:hover { border-bottom-color: currentColor; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 40px 0 28px; border-bottom: 6px solid var(--ink); }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+    font-size: clamp(3.4rem, 13vw, 10.5rem); line-height: .86; margin: 0; letter-spacing: .005em;
+    word-break: break-word;
+  }
+  .hero h1 .cat { display: block; }
+  .hero .count {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 5.5vw, 4rem);
+    line-height: 1; margin: 18px 0 8px; letter-spacing: .01em;
+  }
+  .hero .count small { font-size: .55em; font-weight: 600; }
+  .tagline { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 62ch; margin: 10px 0 0; font-weight: 600; }
+  .weekday { max-width: 66ch; margin: 8px 0 0; }
+  .klam-toggle { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; cursor: pointer; user-select: none; font-weight: 600; }
+  .switch { position: relative; width: 54px; height: 30px; flex: none; }
+  .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .switch span { position: absolute; inset: 0; border: 3px solid var(--ink); border-radius: 30px; transition: background .2s; }
+  .switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); transition: transform .2s; }
+  .switch input:checked + span { background: var(--ink); }
+  .switch input:checked + span::after { background: var(--bg); transform: translateX(24px); }
+  .switch input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  .neighbours { display: grid; grid-template-columns: 1fr; gap: 16px 32px; margin-top: 26px; font-size: 1rem; }
+  @media (min-width: 640px) { .neighbours { grid-template-columns: 1fr 1fr; } }
+  .neighbours p { margin: 0 0 5px; }
+  .neighbours p.same { opacity: .78; }
+  .neighbours b { font-family: var(--font-display); font-size: 1.35em; font-weight: 800; letter-spacing: .01em; margin-right: 4px; vertical-align: -1px; }
+  .neighbours button { all: unset; cursor: pointer; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .neighbours button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  /* ---------- Sektioner ---------- */
+  section { padding: 36px 0; border-bottom: 3px solid var(--ink); }
+  section:last-of-type { border-bottom: 0; }
+  h2 { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(2rem, 5vw, 3.2rem); line-height: .95; margin: 0 0 6px; }
+  .lede { margin: 0 0 20px; max-width: 66ch; }
+  .lede b { font-weight: 700; }
+
+  /* ---------- Årsremsa ---------- */
+  .yearnav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .yearnav button {
+    font: 700 1rem var(--font-body); color: var(--ink); background: transparent; border: 3px solid var(--ink);
+    padding: 8px 14px; cursor: pointer; border-radius: 999px;
+  }
+  .yearnav button:hover { background: var(--ink); color: var(--bg); }
+  .yearnav button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .yearnav .hint { font-size: .9rem; text-align: center; }
+  .strip { display: flex; gap: 6px; overflow-x: auto; padding: 10px 2px 14px; scroll-snap-type: x proximity; scrollbar-width: thin; }
+  .tile {
+    flex: 0 0 auto; width: 84px; padding: 8px 8px 10px; border: 3px solid transparent; cursor: pointer; text-align: left;
+    font-family: var(--font-body); scroll-snap-align: center; border-radius: 6px; transition: transform .15s;
+  }
+  .tile:hover { transform: translateY(-3px); }
+  .tile:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .tile .y { font-family: var(--font-display); font-weight: 800; font-size: 1.45rem; line-height: 1; display: block; }
+  .tile .n { font-family: var(--font-display); font-weight: 900; font-size: 2.6rem; line-height: 1; display: block; margin: 8px 0 2px; }
+  .tile .l { font-size: .72rem; line-height: 1.1; display: block; opacity: .9; }
+  .tile.arbetar { background: var(--red); color: var(--red-ink); border-color: var(--red-deep); }
+  .tile.grasosse { background: #6F6D67; color: #F1EFE9; border-color: #3A3936; }
+  .tile.arbetsgivar { background: var(--saff); color: var(--saff-ink); border-color: #B58500; }
+  .tile.sel { border-color: var(--ink); transform: translateY(-6px); box-shadow: 0 6px 0 var(--ink); }
+  body[data-cat="arbetar"] .tile.arbetar:not(.sel) { border-color: var(--red-ink); }
+  body[data-cat="arbetsgivar"] .tile.arbetsgivar:not(.sel) { border-color: var(--saff-ink); }
+  .tile.now .y::after { content: " nu"; font-size: .6em; font-weight: 600; font-family: var(--font-body); }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .92rem; margin-top: 6px; }
+  .legend span::before { content: ""; display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; border: 1px solid rgba(0,0,0,.25); }
+  .legend .a::before { background: var(--red); } .legend .g::before { background: #6F6D67; } .legend .s::before { background: var(--saff); }
+
+  /* ---------- Julkalender ---------- */
+  .calwrap { display: grid; gap: 28px; }
+  .calwrap > * { min-width: 0; }
+  @media (min-width: 900px) { .calwrap { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+  .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .cal .h { font-size: .8rem; font-weight: 600; text-align: center; padding-bottom: 4px; }
+  .cell { min-height: 62px; border: 2px solid var(--ink); border-radius: 5px; padding: 4px 5px; display: flex; flex-direction: column; justify-content: space-between; font-size: .7rem; line-height: 1.05; overflow: hidden; }
+  .cell .lbl { hyphens: manual; }
+  @media (max-width: 480px) { .cell { font-size: .58rem; padding: 3px 3px; min-height: 58px; } .cell .d { font-size: 1.2rem; } }
+  .cell .d { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1; }
+  .cell .d em { font-style: normal; font-family: var(--font-body); font-weight: 600; font-size: .6rem; margin-left: 3px; }
+  .cell.free { background: var(--ink); color: var(--bg); }
+  .cell.we { border-color: transparent; background: var(--soft); opacity: .8; }
+  .cell.kl-on { background: repeating-linear-gradient(135deg, var(--hatch) 0 5px, transparent 5px 11px); }
+  .cell.kl-on .d, .cell.kl-on .lbl { background: var(--bg); padding: 1px 3px; border-radius: 3px; align-self: flex-start; }
+  .cell.kl-off { border-style: dashed; }
+  .cell.out { opacity: .35; }
+  .callegend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .88rem; margin-top: 12px; }
+  .callegend i { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--ink); border-radius: 3px; vertical-align: -3px; margin-right: 6px; }
+  .callegend i.free { background: var(--ink); } .callegend i.kl { background: repeating-linear-gradient(135deg, var(--hatch) 0 3px, transparent 3px 7px); } .callegend i.we { border-color: transparent; background: var(--soft); }
+  .stretch { background: var(--panel); color: var(--panel-ink); padding: 22px 24px 24px; border-radius: 10px; }
+  .stretch .big { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: .9; margin: 0 0 6px; overflow-wrap: anywhere; }
+  .stretch .big small { font-size: .42em; font-weight: 600; font-family: var(--font-body); display: block; margin-top: 8px; letter-spacing: 0; text-transform: none; }
+  .stretch p { margin: 10px 0 0; }
+  .stretch p + p { opacity: .85; font-size: .95rem; }
+
+  /* ---------- Årstabell ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: .97rem; }
+  th, td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--ink); vertical-align: top; }
+  th { font-weight: 700; font-size: .85rem; border-bottom-width: 3px; }
+  td.num, th.num { text-align: right; padding-right: 0; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; white-space: nowrap; }
+  tr.lost td { opacity: .6; }
+  tr.always td { opacity: .45; }
+  tr.total td { border-bottom: 0; border-top: 3px solid var(--ink); font-weight: 700; padding-top: 12px; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .8rem; font-weight: 600; border: 2px solid var(--ink); white-space: nowrap; }
+  .pill.on { background: var(--ink); color: var(--bg); }
+  .foot { font-size: .9rem; margin: 14px 0 0; max-width: 70ch; }
+  @media (max-width: 640px) { .hide-m { display: none; } table { font-size: .9rem; } }
+
+  /* ---------- Toppar & dalar ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; margin: 4px 0 22px; }
+  .seg { display: inline-flex; border: 3px solid var(--ink); border-radius: 999px; overflow: hidden; }
+  .seg button { all: unset; cursor: pointer; padding: 6px 16px; font-weight: 700; font-size: .95rem; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .seg button:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+  .maxmin { display: grid; gap: 14px; }
+  @media (min-width: 700px) { .maxmin { grid-template-columns: 1fr 1fr; } }
+  .mm { background: var(--panel); color: var(--panel-ink); padding: 20px 22px 22px; border-radius: 10px; }
+  .mm h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; }
+  .mm .yr { font-family: var(--font-display); font-weight: 900; font-size: clamp(3.2rem, 8vw, 5.4rem); line-height: .9; }
+  .mm .yr small { display: block; font-size: 1.05rem; font-weight: 700; font-family: var(--font-body); line-height: 1.3; margin-top: 6px; }
+  .mm p { margin: 8px 0 0; font-size: .95rem; opacity: .9; }
+  .seven { margin-top: 26px; }
+  .seven table td:first-child { text-transform: capitalize; }
+
+  /* ---------- Så räknar vi ---------- */
+  .prose { max-width: 70ch; }
+  .prose p { margin: 0 0 14px; }
+  .prose h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin: 22px 0 6px; text-transform: uppercase; }
+
+  /* ---------- Sticky footer ---------- */
+  .foot-space { height: 30px; }
+  footer.sticky {
+    position: sticky; bottom: 0; background: var(--ink); color: var(--bg); text-align: center;
+    padding: 9px 16px; font-size: .92rem; font-weight: 600; z-index: 5;
+  }
+  footer.sticky a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } html { scroll-behavior: auto; } }
+  @media print { footer.sticky { position: static; } .yearnav, .klam-toggle { display: none; } }
+</style>
+</head>
+<body data-cat="grasosse">
+
+<header class="wrap top">
+  <a class="brand" href="#" id="brandLink">Arbetarjul</a>
+  <nav>
+    <a href="#kalender">Julen dag för dag</a>
+    <a href="#aret" class="hide-m">Hela året</a>
+    <a href="#toppar" class="hide-m">Toppar &amp; dalar</a>
+    <a href="#metod">Så räknar vi</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1 id="headline"><span class="yr"></span> är en <span class="cat"></span></h1>
+    <div class="count" id="count"></div>
+    <label class="klam-toggle">
+      <span class="switch"><input type="checkbox" id="klam" checked><span></span></span>
+      <span>Räkna med klämdagar</span>
+    </label>
+    <p class="tagline" id="tagline"></p>
+    <p class="weekday" id="weekdayText"></p>
+    <div class="neighbours" id="neighbours"></div>
+  </div>
+
+  <section id="ar">
+    <h2>Tio år bakåt, tio år framåt</h2>
+    <p class="lede">Välj ett år. Siffran är antalet lediga vardagar under julen, färgen är sortens jul.</p>
+    <div class="yearnav">
+      <button type="button" id="prevYear"></button>
+      <span class="hint hide-m">Piltangenterna fungerar också</span>
+      <button type="button" id="nextYear"></button>
+    </div>
+    <div class="strip" id="strip" role="listbox" aria-label="Välj år"></div>
+    <div class="legend"><span class="a">Arbetarjul</span><span class="g">Gråsossejul</span><span class="s">Arbetsgivarjul</span></div>
+  </section>
+
+  <section id="kalender">
+    <h2>Julen dag för dag</h2>
+    <p class="lede" id="calLede"></p>
+    <div class="calwrap">
+      <div>
+        <div class="cal" id="cal"></div>
+        <div class="callegend"><span><i class="free"></i>Ledig dag</span><span><i class="kl"></i>Klämdag</span><span><i class="we"></i>Helg</span><span><i></i>Arbetsdag</span></div>
+      </div>
+      <div class="stretch" id="stretch"></div>
+    </div>
+  </section>
+
+  <section id="aret">
+    <h2>Hela året <span id="aretYear"></span></h2>
+    <p class="lede">Alla röda dagar och de facto-lediga aftnar, och vilka av dem som faktiskt landar på en vardag.</p>
+    <table id="yearTable"></table>
+    <p class="foot" id="yearFoot"></p>
+  </section>
+
+  <section id="toppar">
+    <h2>Toppar och dalar</h2>
+    <p class="lede">När kommer nästa riktigt bra år, och nästa riktigt dåliga? Räknat över hela 28-årscykeln.</p>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Räkna på">
+        <button type="button" data-scope="jul" aria-pressed="true">Bara julen</button>
+        <button type="button" data-scope="ar" aria-pressed="false">Alla röda dagar</button>
+      </div>
+      <label class="klam-toggle" style="margin-top:0">
+        <span class="switch"><input type="checkbox" id="klam2" checked><span></span></span>
+        <span>Räkna med klämdagar</span>
+      </label>
+    </div>
+    <div class="maxmin" id="maxmin"></div>
+    <div class="seven" id="seven"></div>
+  </section>
+
+  <section id="metod">
+    <h2>Så räknar vi</h2>
+    <div class="prose" id="method"></div>
+  </section>
+  <div class="foot-space"></div>
+</main>
+
+<footer class="sticky">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
+
+<script src="calc.js"></script>
+<script>
+(function () {
+  const A = window.AJ;
+  const NOW = new Date().getFullYear();
+  const MIN = NOW - 10, MAX = NOW + 10;
+  const state = { year: NOW, klam: true, scope: 'jul' };
+
+  const h = (y) => { const n = parseInt((location.hash || '').replace('#', ''), 10); return n >= MIN && n <= MAX ? n : NOW; };
+  state.year = h();
+  try { const k = localStorage.getItem('aj-klam'); if (k !== null) state.klam = k === '1'; } catch (e) {}
+
+  const $ = (s) => document.querySelector(s);
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const dagar = (n) => `${n} ${n === 1 ? 'ledig dag' : 'lediga dagar'}`;
+  const THEME = { arbetar: '#C4161C', grasosse: '#B3B0A7', arbetsgivar: '#F3B400' };
+
+  const TAG = {
+    arbetar: 'Maximalt utfall. De röda dagarna landar mitt i arbetsveckan och arbetarklassen sover ut.',
+    grasosse: 'Ett mellanting. Något till arbetet, något till ledigheten. Ingen jublar, ingen protesterar.',
+    arbetsgivar: 'Minimalt utfall. Helgdagarna faller på helgen och kostar ingen arbetsgivare en krona.',
+  };
+  const WTEXT = [
+    'Julafton på en måndag. Tre röda dagar i rad direkt efter helgen, sedan nyår på tisdag. Stabilt, men trettondagen drunknar i en söndag.',
+    'Julafton på en tisdag. Klämdag på måndagen, röda dagar tisdag till torsdag och ny klämdag på fredagen. Nyår gör om konststycket och trettondagen landar på en måndag. Bättre blir det inte.',
+    'Julafton på en onsdag. Onsdag, torsdag, fredag: tre röda dagar rakt in i helgen, och nyår gör samma sak. Trettondagen på tisdag ger en klämdag på måndagen.',
+    'Julafton på en torsdag. Torsdag och fredag röda, sedan helg. Nyår gör likadant. Hyggligt, men annandagen går förlorad på en lördag.',
+    'Julafton på en fredag. Juldagen och annandagen försvinner i helgen, nyårsdagen likaså. Kvar blir julafton, nyårsafton, trettondagen och en tröstande klämdag därefter.',
+    'Julafton på en lördag. Julafton, juldagen, nyårsafton och nyårsdagen faller alla på helg. Två röda vardagar på hela perioden. Näringslivet tackar för visat intresse.',
+    'Julafton på en söndag. Julafton och nyårsafton försvinner i helgen, men juldagen, annandagen och nyårsdagen räddas till måndag och tisdag. Trettondagen faller på en lördag.',
+  ];
+
+  function findNext(from, pred, dir, limit) {
+    for (let i = 1; i <= (limit || 60); i++) { const y = from + dir * i; if (pred(y)) return y; }
+    return null;
+  }
+  function setYear(y) { if (y < MIN || y > MAX) return; state.year = y; history.replaceState(null, '', '#' + y); render(); }
+  function yearLink(y) { return `<button type="button" data-goto="${y}">${y}</button>`; }
+
+  function render() {
+    const y = state.year, k = state.klam;
+    const cat = A.category(y, k);
+    const jc = A.julCount(y, k);
+    document.body.dataset.cat = cat.key;
+    $('#themeColor').setAttribute('content', THEME[cat.key]);
+    document.title = `${y} är ${cat.def} – Arbetarjul`;
+    $('#klam').checked = k; $('#klam2').checked = k;
+
+    // Hero
+    $('#headline .yr').textContent = y;
+    $('#headline .cat').textContent = cat.name;
+    $('#count').innerHTML = `(${dagar(jc.total)}) <small>${k ? 'inkl.' : 'exkl.'} klämdagar</small>`;
+    $('#tagline').textContent = TAG[cat.key];
+    const w = A.julafton(y);
+    $('#weekdayText').textContent = WTEXT[w];
+
+    const others = Object.values(A.CATS).filter(c => c.key !== cat.key);
+    const nb = $('#neighbours'); nb.innerHTML = '';
+    const fwd = el('div'), back = el('div');
+    const line = (label, yy, same) => el('p', same ? 'same' : null, `${label}: <b>${yy ? yearLink(yy) : '–'}</b> ${yy ? '(' + dagar(A.julCount(yy, k).total) + ')' : ''}`);
+    for (const c of others.concat([cat])) {
+      const same = c.key === cat.key;
+      const ny = findNext(y, yy => A.category(yy, k).key === c.key, 1);
+      const py = findNext(y, yy => A.category(yy, k).key === c.key, -1);
+      fwd.appendChild(line(`Nästa ${c.name}${same ? ' efter ' + y : ''}`, ny, same));
+      back.appendChild(line(`Senaste ${c.name}en${same ? ' före ' + y : ''}`, py, same));
+    }
+    nb.appendChild(fwd); nb.appendChild(back);
+
+    // Strip
+    const strip = $('#strip'); strip.innerHTML = '';
+    for (let yy = MIN; yy <= MAX; yy++) {
+      const c = A.category(yy, k), n = A.julCount(yy, k).total;
+      const t = el('button', `tile ${c.key}${yy === y ? ' sel' : ''}${yy === NOW ? ' now' : ''}`,
+        `<span class="y">${yy}</span><span class="n">${n}</span><span class="l">${cap(c.name)}</span>`);
+      t.type = 'button'; t.setAttribute('role', 'option'); t.setAttribute('aria-selected', yy === y);
+      t.addEventListener('click', () => setYear(yy));
+      strip.appendChild(t);
+    }
+    $('#prevYear').textContent = `‹ ${y - 1}`; $('#prevYear').disabled = y <= MIN;
+    $('#nextYear').textContent = `${y + 1} ›`; $('#nextYear').disabled = y >= MAX;
+    requestAnimationFrame(() => { const s = strip.querySelector('.sel'); if (s) s.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' }); });
+
+    // Kalender
+    $('#calLede').innerHTML = `Så här ser julen <b>${y}</b> ut: <b>${jc.red}</b> röda vardagar och <b>${jc.klam}</b> ${jc.klam === 1 ? 'klämdag' : 'klämdagar'} mellan 23 december och 7 januari.`;
+    const cal = $('#cal'); cal.innerHTML = '';
+    for (const s of A.WDS) cal.appendChild(el('div', 'h', s));
+    let start = A.d(y, 12, 20); while (A.dow(start) !== 0) start = A.add(start, -1);
+    let end = A.d(y + 1, 1, 9); while (A.dow(end) !== 6) end = A.add(end, 1);
+    const LBL = { 'Julafton': 'jul&shy;afton', 'Juldagen': 'jul&shy;dagen', 'Annandag jul': 'annan&shy;dag jul', 'Nyårsafton': 'nyårs&shy;afton', 'Nyårsdagen': 'nyårs&shy;dagen', 'Trettondedag jul': 'tretton&shy;dag jul' };
+    for (let x = start; x <= end; x = A.add(x, 1)) {
+      const i = A.dayInfo(x, y);
+      const out = i.iso < `${y}-12-23` || i.iso > `${y + 1}-01-07`;
+      let cls = 'cell', lbl = '';
+      if (i.holiday) { cls += ' free'; lbl = LBL[i.holiday.name] || i.holiday.name.toLowerCase(); }
+      else if (i.weekend) { cls += ' we'; }
+      else if (i.klam) { cls += k ? ' kl-on' : ' kl-off'; lbl = 'kläm&shy;dag'; }
+      if (out) cls += ' out';
+      const first = x.getUTCDate() === 1 || x.getTime() === start.getTime();
+      cal.appendChild(el('div', cls, `<span class="d">${x.getUTCDate()}${first ? '<em>' + A.MON[x.getUTCMonth()].slice(0, 3) + '</em>' : ''}</span><span class="lbl">${lbl}</span>`));
+    }
+    const st = A.stretch(y, k);
+    $('#stretch').innerHTML = `
+      <div class="big">${st.need} semesterdag${st.need === 1 ? '' : 'ar'}<small>räcker för att vara ledig hela julen</small></div>
+      <p>Det ger <b>${st.len} dagar</b> i sträck, ${A.fmt(st.start)} till ${A.fmt(st.end, true)}.</p>
+      <p>${k ? 'Klämdagarna räknas som lediga.' : 'Klämdagarna räknas som arbetsdagar. Slå på dem ovan så sjunker priset.'} Arbetsdagarna mellan 24 december och 6 januari är de som kostar semester.</p>`;
+
+    // Hela året
+    $('#aretYear').textContent = y;
+    const yc = A.yearCount(y, k);
+    const days = A.yearDays(y);
+    const klamDays = days.filter(d => d.klam);
+    const rows = [];
+    let nationalStar = false;
+    for (const hd of A.holidays(y)) {
+      const i = A.dayInfo(hd.date, y);
+      const always = ['Påskdagen', 'Pingstdagen', 'Midsommardagen', 'Alla helgons dag'].includes(hd.name);
+      const weekend = i.weekend;
+      let star = '';
+      if (hd.national && weekend) { star = '*'; nationalStar = true; }
+      const kl = klamDays.filter(d => Math.abs(d.date - hd.date) === 86400000).map(d => `${A.WDS[d.dow]} ${A.fmt(d.date)}`);
+      const outcome = always ? '<span class="pill">Alltid på helg</span>' : weekend ? '<span class="pill">Faller på helg</span>' : '<span class="pill on">Ledig vardag</span>';
+      rows.push(`<tr class="${always ? 'always' : weekend ? 'lost' : ''}">
+        <td>${hd.name}${star}${hd.kind === 'afton' ? ' <span class="hide-m" style="opacity:.7;font-size:.85em">(de facto)</span>' : ''}</td>
+        <td>${A.fmt(hd.date)}</td><td class="hide-m">${cap(A.WD[i.dow])}</td>
+        <td>${outcome}</td>
+        <td class="hide-m">${kl.length ? 'Klämdag ' + kl.join(', ') : ''}</td>
+        <td class="num">${!weekend ? 1 : ''}</td></tr>`);
+    }
+    rows.push(`<tr class="total"><td colspan="5">Röda vardagar ${y}${k ? `, plus ${yc.klam} klämdagar` : ''}</td><td class="num">${yc.total}</td></tr>`);
+    $('#yearTable').innerHTML = `<thead><tr><th>Dag</th><th>Datum</th><th class="hide-m">Veckodag</th><th>Utfall</th><th class="hide-m">Klämdag intill</th><th class="num">Ledig</th></tr></thead><tbody>${rows.join('')}</tbody>`;
+    const klList = klamDays.map(d => `${A.WDS[d.dow]} ${A.fmt(d.date)}`).join(', ');
+    $('#yearFoot').innerHTML = (nationalStar ? '* Nationaldagen infaller på en helgdag. Vissa kollektivavtal medger att den då ersätts av ledighet en annan dag.<br>' : '')
+      + (klamDays.length ? `Klämdagar ${y}: ${klList}.` : `Inga klämdagar alls ${y}.`)
+      + ' Julafton, midsommarafton och nyårsafton är inte lagstadgade helgdagar men lediga enligt de flesta kollektivavtal, så de räknas som röda här.';
+
+    // Toppar och dalar
+    const cnt = state.scope === 'jul' ? (yy) => A.julCount(yy, k).total : (yy) => A.yearCount(yy, k).total;
+    let mx = -1, mn = 99; for (let i = 1; i <= 28; i++) { const v = cnt(y + i); mx = Math.max(mx, v); mn = Math.min(mn, v); }
+    const nextMax = findNext(y, yy => cnt(yy) === mx, 1), nextMin = findNext(y, yy => cnt(yy) === mn, 1);
+    const prevMax = findNext(y, yy => cnt(yy) === mx, -1), prevMin = findNext(y, yy => cnt(yy) === mn, -1);
+    const unit = state.scope === 'jul' ? 'lediga dagar under julen' : 'lediga vardagar på hela året';
+    const cur = cnt(y);
+    $('#maxmin').innerHTML = `
+      <div class="mm"><h3>Nästa arbetarmax</h3><div class="yr">${nextMax}<small>${mx} ${unit}</small></div>
+        <p>Det bästa året som går att få. Senast det hände var ${prevMax}. ${cur === mx ? `${y} är själv ett sådant år.` : `${y} ger ${cur}.`}</p></div>
+      <div class="mm"><h3>Nästa arbetsgivarmax</h3><div class="yr">${nextMin}<small>${mn} ${unit}</small></div>
+        <p>Det sämsta året som går att få. Senast det hände var ${prevMin}. ${cur === mn ? `${y} är själv ett sådant år.` : `${y} ger ${cur}.`}</p></div>`;
+
+    const t = A.tiers(k);
+    const sev = t.byWeekday.map((v, i) => { const c = A.category(v.year, k); return `<tr><td>${A.WD[i]}</td><td><span class="pill ${c.key === cat.key ? 'on' : ''}">${cap(c.name)}</span></td><td class="num">${v.total}</td></tr>`; }).join('');
+    $('#seven').innerHTML = `<h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;text-transform:uppercase;margin:0 0 4px">De sju möjliga julaftnarna</h3>
+      <p class="lede">Julen styrs helt av vilken veckodag julafton infaller på. Så här faller det ut ${k ? 'med' : 'utan'} klämdagar.</p>
+      <table><thead><tr><th>Julafton på</th><th>Sortens jul</th><th class="num">Lediga dagar</th></tr></thead><tbody>${sev}</tbody></table>`;
+
+    // Metod
+    $('#method').innerHTML = `
+      <p>Vi räknar <b>lediga vardagar</b>: måndag till fredag som du är ledig utan att ta semester. Helgdagar som infaller på en lördag eller söndag ger ingen extra ledighet och räknas inte.</p>
+      <h3>Julen</h3>
+      <p>Julperioden är 23 december till 7 januari. Röda dagar i den: julafton, juldagen, annandag jul, nyårsafton, nyårsdagen och trettondedag jul. Utfallet styrs helt av julaftons veckodag, så det finns exakt sju möjliga julsorter.</p>
+      <p>De sju julaftnarna rangordnas efter utfall. De två bästa (tisdag och onsdag) kallar vi <b>arbetarjul</b>. De tre sämsta (fredag, lördag och söndag) kallar vi <b>arbetsgivarjul</b>, som en blinkning till SAF, Svenska Arbetsgivareföreningen, som numera heter Svenskt Näringsliv. Måndag och torsdag ger en <b>gråsossejul</b>, ett rimligt mellanläge i den grå sossens anda: lite till arbetet, lite till ledigheten.</p>
+      <h3>Klämdagar</h3>
+      <p>En klämdag är en enskild vardag med ledigt på båda sidor, till exempel fredagen efter Kristi himmelsfärdsdag. Två arbetsdagar på rad mellan lediga dagar räknas inte som klämdagar, även om många tar ledigt då också. Slå av eller på klämdagarna med reglaget högst upp.</p>
+      <h3>Aftnar och kollektivavtal</h3>
+      <p>Julafton, nyårsafton och midsommarafton är inte helgdagar enligt lag, men i praktiken lediga enligt nästan alla kollektivavtal. De räknas därför som röda dagar här. Halvdagar som trettondagsafton, skärtorsdagen och valborgsmässoafton ingår inte. Om nationaldagen infaller på en helg ger vissa avtal en kompensationsdag, vilket markeras med en asterisk.</p>
+      <p>Påskens och pingstens röda dagar samt Kristi himmelsfärdsdag och midsommarafton ligger alltid på vardagar, så de ger samma utfall varje år. Det som varierar är de fasta datumen: nyår, trettondagen, första maj, nationaldagen och julhelgen.</p>`;
+
+    nb.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => setYear(parseInt(b.dataset.goto, 10))));
+  }
+
+  function setKlam(v) { state.klam = v; try { localStorage.setItem('aj-klam', v ? '1' : '0'); } catch (e) {} render(); }
+  $('#klam').addEventListener('change', e => setKlam(e.target.checked));
+  $('#klam2').addEventListener('change', e => setKlam(e.target.checked));
+  $('#prevYear').addEventListener('click', () => setYear(state.year - 1));
+  $('#nextYear').addEventListener('click', () => setYear(state.year + 1));
+  $('#brandLink').addEventListener('click', e => { e.preventDefault(); setYear(NOW); window.scrollTo({ top: 0 }); });
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    state.scope = b.dataset.scope;
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    render();
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input, textarea, select')) return;
+    if (e.key === 'ArrowLeft') setYear(state.year - 1);
+    if (e.key === 'ArrowRight') setYear(state.year + 1);
+  });
+  window.addEventListener('hashchange', () => { state.year = h(); render(); });
+  render();
+})();
+</script>
+</body>
+</html>
