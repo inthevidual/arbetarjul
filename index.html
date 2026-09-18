@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Arbetarjul</title>
 <meta name="description" content="Är det en arbetarjul, gråsossejul eller arbetsgivarjul i år? Ledighetsutfallet för svenska röda dagar och klämdagar, år för år.">
-<meta name="theme-color" content="#B3B0A7" id="themeColor">
+<meta name="theme-color" content="#D3D0C8" id="themeColor">
 <link rel="canonical" href="https://arbetarjul.cptjanst.se/">
 <meta property="og:site_name" content="Arbetarjul">
 <meta property="og:title" content="Arbetarjul">
@@ -28,10 +28,10 @@
 <meta name="twitter:description" content="Vilken sorts jul blir det i år? Arbetarjul, gråsossejul eller arbetsgivarjul, och hur många lediga dagar det ger.">
 <meta name="twitter:image" content="https://arbetarjul.cptjanst.se/og.jpg">
 <meta name="twitter:image:alt" content="Tre tomtar i gul, röd och grå dräkt framför en julgran.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Familjen+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -40,13 +40,13 @@
     --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
     --font-body: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
     --red: #C4161C; --red-ink: #FFF1DC; --red-deep: #8A0E13;
-    --grey: #B3B0A7; --grey-ink: #1C1B19; --grey-deep: #3A3936;
+    --grey: #D3D0C8; --grey-ink: #1C1B19; --grey-deep: #3A3936;
     --saff: #F3B400; --saff-ink: #241A00; --saff-deep: #4A3100;
     --max: 1120px;
   }
-  body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #C9C6BE; --hatch: #1C1B19; }
-  body[data-cat="arbetar"]  { --bg: var(--red);  --ink: var(--red-ink);  --panel: var(--red-deep);  --panel-ink: #FFF1DC; --soft: #D2383D; --hatch: #FFF1DC; }
-  body[data-cat="arbetsgivar"] { --bg: var(--saff); --ink: var(--saff-ink); --panel: var(--saff-deep); --panel-ink: #FFE49A; --soft: #F8C93C; --hatch: #241A00; }
+  body[data-cat="grasosse"] { --bg: var(--grey); --ink: var(--grey-ink); --panel: var(--grey-deep); --panel-ink: #EDEBE4; --soft: #E3E1DA; --hatch: #1C1B19; --card: rgba(255,255,255,.42); }
+  body[data-cat="arbetar"]  { --bg: var(--red);  --ink: var(--red-ink);  --panel: var(--red-deep);  --panel-ink: #FFF1DC; --soft: #D2383D; --hatch: #FFF1DC; --card: rgba(0,0,0,.2); }
+  body[data-cat="arbetsgivar"] { --bg: var(--saff); --ink: var(--saff-ink); --panel: var(--saff-deep); --panel-ink: #FFE49A; --soft: #F8C93C; --hatch: #241A00; --card: rgba(255,255,255,.38); }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -68,20 +68,27 @@
   .top nav a:hover { border-bottom-color: currentColor; }
 
   /* ---------- Hero ---------- */
-  .hero { padding: 40px 0 28px; border-bottom: 6px solid var(--ink); }
-  .hero h1 {
-    font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
-    font-size: clamp(3.4rem, 13vw, 10.5rem); line-height: .86; margin: 0; letter-spacing: .005em;
-    word-break: break-word;
-  }
-  .hero h1 .cat { display: block; }
+  .hero { padding: 22px 0 32px; border-bottom: 6px solid var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .pick { display: flex; flex-direction: column; align-items: center; }
+  .arrow { all: unset; cursor: pointer; width: 64px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+  .arrow svg { width: 44px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+  .arrow:hover svg { transform: scale(1.15); }
+  .arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .arrow[disabled] { opacity: .25; cursor: default; }
+  .arrow[disabled]:hover svg { transform: none; }
+  .bigyear { font-family: var(--font-display); font-weight: 900; font-size: clamp(6rem, 26vw, 15rem); line-height: .82; letter-spacing: .01em; user-select: none; margin: 6px 0; }
+  .hero h1 { margin: 6px 0 0; font-weight: 900; text-transform: uppercase; line-height: .9; }
+  .hero h1 .aren { display: block; font-family: var(--font-body); font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.4rem); text-transform: none; letter-spacing: .02em; margin-bottom: 6px; }
+  .hero h1 .cat { display: block; font-family: var(--font-display); font-size: clamp(3rem, 11.5vw, 9rem); letter-spacing: .005em; word-break: break-word; }
+  .hero h1 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .hero .count {
-    font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 5.5vw, 4rem);
-    line-height: 1; margin: 18px 0 8px; letter-spacing: .01em;
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 5.5vw, 3.6rem);
+    line-height: 1; margin: 16px 0 6px; letter-spacing: .01em;
   }
   .hero .count small { font-size: .55em; font-weight: 600; }
-  .tagline { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 62ch; margin: 10px 0 0; font-weight: 600; }
-  .weekday { max-width: 66ch; margin: 8px 0 0; }
+  .hero-actions { justify-content: center; }
+  .tagline { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 62ch; margin: 14px auto 0; font-weight: 600; }
+  .weekday { max-width: 66ch; margin: 8px auto 0; }
   .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 22px; }
   .klam-toggle { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; font-weight: 600; }
   .share { display: inline-flex; align-items: center; gap: 8px; font: 700 1rem var(--font-body); color: var(--ink); background: transparent; border: 3px solid var(--ink); border-radius: 999px; padding: 6px 16px 6px 12px; cursor: pointer; }
@@ -97,7 +104,8 @@
   .switch input:checked + span::after { background: var(--bg); transform: translateX(24px); }
   .switch input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  .neighbours { display: grid; grid-template-columns: 1fr; gap: 16px 32px; margin-top: 26px; font-size: 1rem; }
+  .card { background: var(--card); border-radius: 12px; padding: 20px 22px; }
+  .neighbours { display: grid; grid-template-columns: 1fr; gap: 16px 36px; margin-top: 28px; font-size: 1rem; text-align: left; width: 100%; max-width: 860px; }
   @media (min-width: 640px) { .neighbours { grid-template-columns: 1fr 1fr; } }
   .neighbours p { margin: 0 0 5px; }
   .neighbours p.same { opacity: .78; }
@@ -113,18 +121,11 @@
   .lede b { font-weight: 700; }
 
   /* ---------- Årsremsa ---------- */
-  .yearnav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .yearnav button {
-    font: 700 1rem var(--font-body); color: var(--ink); background: transparent; border: 3px solid var(--ink);
-    padding: 8px 14px; cursor: pointer; border-radius: 999px;
-  }
-  .yearnav button:hover { background: var(--ink); color: var(--bg); }
-  .yearnav button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-  .yearnav .hint { font-size: .9rem; text-align: center; }
-  .strip { display: flex; gap: 6px; overflow-x: auto; padding: 10px 2px 14px; scroll-snap-type: x proximity; scrollbar-width: thin; }
+  .strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; padding: 8px 0 12px; }
+  @media (min-width: 900px) { .strip { grid-template-columns: repeat(7, 1fr); } }
   .tile {
-    flex: 0 0 auto; width: 84px; padding: 8px 8px 10px; border: 3px solid transparent; cursor: pointer; text-align: left;
-    font-family: var(--font-body); scroll-snap-align: center; border-radius: 6px; transition: transform .15s;
+    min-width: 0; padding: 8px 8px 10px; border: 3px solid transparent; cursor: pointer; text-align: left;
+    font-family: var(--font-body); border-radius: 6px; transition: transform .15s;
   }
   .tile:hover { transform: translateY(-3px); }
   .tile:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
@@ -163,7 +164,8 @@
   .callegend i { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--ink); border-radius: 3px; vertical-align: -3px; margin-right: 6px; }
   .callegend i.free { background: var(--ink); } .callegend i.kl { background: repeating-linear-gradient(135deg, var(--hatch) 0 3px, transparent 3px 7px); } .callegend i.we { border-color: transparent; background: var(--soft); }
   .stretch { background: var(--panel); color: var(--panel-ink); padding: 22px 24px 24px; border-radius: 10px; }
-  .stretch .big { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: .9; margin: 0 0 6px; overflow-wrap: anywhere; }
+  .stretch .big { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height: .9; margin: 0 0 6px; }
+  .stretch .big .w { white-space: nowrap; }
   .stretch .big small { font-size: .42em; font-weight: 600; font-family: var(--font-body); display: block; margin-top: 8px; letter-spacing: 0; text-transform: none; }
   .stretch p { margin: 10px 0 0; }
   .stretch p + p { opacity: .85; font-size: .95rem; }
@@ -198,7 +200,10 @@
   .seven table td:first-child { text-transform: capitalize; }
 
   /* ---------- Så räknar vi ---------- */
-  .prose { max-width: 70ch; }
+  .prose { max-width: 74ch; }
+  .prose p:last-child { margin-bottom: 0; }
+  .card table th { border-bottom-width: 3px; }
+  @media (max-width: 480px) { .card { padding: 14px 12px; } }
   .prose p { margin: 0 0 14px; }
   .prose h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin: 22px 0 6px; text-transform: uppercase; }
 
@@ -209,9 +214,10 @@
     padding: 9px 16px; font-size: .92rem; font-weight: 600; z-index: 5;
   }
   footer.sticky a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+  footer.sticky img { width: 20px; height: 20px; vertical-align: -5px; margin-right: 8px; }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } html { scroll-behavior: auto; } }
-  @media print { footer.sticky { position: static; } .yearnav, .klam-toggle { display: none; } }
+  @media print { footer.sticky { position: static; } .arrow, .klam-toggle, .share { display: none; } }
 </style>
 </head>
 <body data-cat="grasosse">
@@ -228,7 +234,12 @@
 
 <main class="wrap">
   <div class="hero">
-    <h1 id="headline"><span class="yr"></span> är en <span class="cat"></span></h1>
+    <div class="pick">
+      <button type="button" class="arrow" id="yearUp" aria-label="Nästa år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 24 22 6l18 18"/></svg></button>
+      <div class="bigyear" id="bigYear" aria-hidden="true"></div>
+      <button type="button" class="arrow" id="yearDown" aria-label="Föregående år"><svg viewBox="0 0 44 30" aria-hidden="true"><path d="M4 6l18 18L40 6"/></svg></button>
+    </div>
+    <h1 id="headline"><span class="sr yr"></span><span class="aren">är en</span><span class="cat"></span></h1>
     <div class="count" id="count"></div>
     <div class="hero-actions">
       <label class="klam-toggle">
@@ -242,17 +253,12 @@
     </div>
     <p class="tagline" id="tagline"></p>
     <p class="weekday" id="weekdayText"></p>
-    <div class="neighbours" id="neighbours"></div>
+    <div class="neighbours card" id="neighbours"></div>
   </div>
 
   <section id="ar">
     <h2>Tio år bakåt, tio år framåt</h2>
-    <p class="lede">Välj ett år. Siffran är antalet lediga vardagar under julen, färgen är sortens jul.</p>
-    <div class="yearnav">
-      <button type="button" id="prevYear"></button>
-      <span class="hint hide-m">Piltangenterna fungerar också</span>
-      <button type="button" id="nextYear"></button>
-    </div>
+    <p class="lede">Välj ett år, eller bläddra med pilarna högst upp och på tangentbordet. Siffran är antalet lediga vardagar under julen, färgen är sortens jul.</p>
     <div class="strip" id="strip" role="listbox" aria-label="Välj år"></div>
     <div class="legend"><span class="a">Arbetarjul</span><span class="g">Gråsossejul</span><span class="s">Arbetsgivarjul</span></div>
   </section>
@@ -272,8 +278,8 @@
   <section id="aret">
     <h2>Hela året <span id="aretYear"></span></h2>
     <p class="lede">Alla röda dagar och de facto-lediga aftnar, och vilka av dem som faktiskt landar på en vardag.</p>
-    <table id="yearTable"></table>
-    <p class="foot" id="yearFoot"></p>
+    <div class="card"><table id="yearTable"></table>
+    <p class="foot" id="yearFoot"></p></div>
   </section>
 
   <section id="toppar">
@@ -290,17 +296,17 @@
       </label>
     </div>
     <div class="maxmin" id="maxmin"></div>
-    <div class="seven" id="seven"></div>
+    <div class="seven card" id="seven"></div>
   </section>
 
   <section id="metod">
     <h2>Så räknar vi</h2>
-    <div class="prose" id="method"></div>
+    <div class="prose card" id="method"></div>
   </section>
   <div class="foot-space"></div>
 </main>
 
-<footer class="sticky">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
+<footer class="sticky"><img src="favicon.svg" alt="" width="20" height="20">Arbetarjul, en tjänst från <a href="https://cptjanst.se">CP-tjänst</a>.</footer>
 
 <script src="calc.js"></script>
 <script>
@@ -318,21 +324,21 @@
   const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
   const dagar = (n) => `${n} ${n === 1 ? 'ledig dag' : 'lediga dagar'}`;
-  const THEME = { arbetar: '#C4161C', grasosse: '#B3B0A7', arbetsgivar: '#F3B400' };
+  const THEME = { arbetar: '#C4161C', grasosse: '#D3D0C8', arbetsgivar: '#F3B400' };
 
   const TAG = {
     arbetar: 'Maximalt utfall. De röda dagarna landar mitt i arbetsveckan och arbetarklassen sover ut.',
-    grasosse: 'Ett mellanting. Något till arbetet, något till ledigheten. Ingen jublar, ingen protesterar.',
+    grasosse: 'Ett mellanting. Lite åt kapitalet, lite åt arbetarna. Ingen jublar, ingen protesterar.',
     arbetsgivar: 'Minimalt utfall. Helgdagarna faller på helgen och kostar ingen arbetsgivare en krona.',
   };
   const WTEXT = [
     'Julafton på en måndag. Tre röda dagar i rad direkt efter helgen, sedan nyår på tisdag. Stabilt, men trettondagen drunknar i en söndag.',
     'Julafton på en tisdag. Klämdag på måndagen, röda dagar tisdag till torsdag och ny klämdag på fredagen. Nyår gör om konststycket och trettondagen landar på en måndag. Bättre blir det inte.',
     'Julafton på en onsdag. Onsdag, torsdag, fredag: tre röda dagar rakt in i helgen, och nyår gör samma sak. Trettondagen på tisdag ger en klämdag på måndagen.',
-    'Julafton på en torsdag. Torsdag och fredag röda, sedan helg. Nyår gör likadant. Hyggligt, men annandagen går förlorad på en lördag.',
-    'Julafton på en fredag. Juldagen och annandagen försvinner i helgen, nyårsdagen likaså. Kvar blir julafton, nyårsafton, trettondagen och en tröstande klämdag därefter.',
+    'Julafton på en torsdag. Torsdag och fredag röda, sedan helg. Nyår likadant. Hyggligt, men annandagen går förlorad på en lördag.',
+    'Julafton på en fredag. Juldagen och annandagen äts upp av helgen, nyårsdagen likaså. Kvar blir julafton, nyårsafton, trettondagen och en tröstande klämdag därefter.',
     'Julafton på en lördag. Julafton, juldagen, nyårsafton och nyårsdagen faller alla på helg. Två röda vardagar på hela perioden. Näringslivet tackar för visat intresse.',
-    'Julafton på en söndag. Julafton och nyårsafton försvinner i helgen, men juldagen, annandagen och nyårsdagen räddas till måndag och tisdag. Trettondagen faller på en lördag.',
+    'Julafton på en söndag. Julafton och nyårsafton äts upp av helgen, men juldagen, annandagen och nyårsdagen räddas till måndag och tisdag. Trettondagen faller på en lördag.',
   ];
 
   function findNext(from, pred, dir, limit) {
@@ -352,7 +358,9 @@
     $('#klam').checked = k; $('#klam2').checked = k;
 
     // Hero
-    $('#headline .yr').textContent = y;
+    $('#headline .yr').textContent = y + ' ';
+    $('#bigYear').textContent = y;
+    $('#yearUp').disabled = y >= MAX; $('#yearDown').disabled = y <= MIN;
     $('#headline .cat').textContent = cat.name;
     $('#count').innerHTML = `(${dagar(jc.total)}) <small>${k ? 'inkl.' : 'exkl.'} klämdagar</small>`;
     $('#tagline').textContent = TAG[cat.key];
@@ -382,9 +390,6 @@
       t.addEventListener('click', () => setYear(yy));
       strip.appendChild(t);
     }
-    $('#prevYear').textContent = `‹ ${y - 1}`; $('#prevYear').disabled = y <= MIN;
-    $('#nextYear').textContent = `${y + 1} ›`; $('#nextYear').disabled = y >= MAX;
-    requestAnimationFrame(() => { const s = strip.querySelector('.sel'); if (s) s.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' }); });
 
     // Kalender
     $('#calLede').innerHTML = `Så här ser julen <b>${y}</b> ut: <b>${jc.red}</b> röda vardagar och <b>${jc.klam}</b> ${jc.klam === 1 ? 'klämdag' : 'klämdagar'} mellan 23 december och 7 januari.`;
@@ -406,7 +411,7 @@
     }
     const st = A.stretch(y, k);
     $('#stretch').innerHTML = `
-      <div class="big">${st.need} semesterdag${st.need === 1 ? '' : 'ar'}<small>räcker för att vara ledig hela julen</small></div>
+      <div class="big"><span class="w">${st.need} semesterdag${st.need === 1 ? '' : 'ar'}</span><small>${cat.key === 'arbetar' ? 'räcker' : 'behövs'} för att vara ledig hela julen</small></div>
       <p>Det ger <b>${st.len} dagar</b> i sträck, ${A.fmt(st.start)} till ${A.fmt(st.end, true)}.</p>
       <p>${k ? 'Klämdagarna räknas som lediga.' : 'Klämdagarna räknas som arbetsdagar. Slå på dem ovan så sjunker priset.'} Arbetsdagarna mellan 24 december och 6 januari är de som kostar semester.</p>`;
 
@@ -463,7 +468,7 @@
       <p>Vi räknar <b>lediga vardagar</b>: måndag till fredag som du är ledig utan att ta semester. Helgdagar som infaller på en lördag eller söndag ger ingen extra ledighet och räknas inte.</p>
       <h3>Julen</h3>
       <p>Julperioden är 23 december till 7 januari. Röda dagar i den: julafton, juldagen, annandag jul, nyårsafton, nyårsdagen och trettondedag jul. Utfallet styrs helt av julaftons veckodag, så det finns exakt sju möjliga julsorter.</p>
-      <p>De sju julaftnarna rangordnas efter utfall. De två bästa (tisdag och onsdag) kallar vi <b>arbetarjul</b>. De tre sämsta (fredag, lördag och söndag) kallar vi <b>arbetsgivarjul</b>, som en blinkning till SAF, Svenska Arbetsgivareföreningen, som numera heter Svenskt Näringsliv. Måndag och torsdag ger en <b>gråsossejul</b>, ett rimligt mellanläge i den grå sossens anda: lite till arbetet, lite till ledigheten.</p>
+      <p>De sju julaftnarna rangordnas efter utfall. De två bästa (tisdag och onsdag) kallar vi <b>arbetarjul</b>. De tre sämsta (fredag, lördag och söndag) kallar vi <b>arbetsgivarjul</b>, som en blinkning till SAF, Svenska Arbetsgivareföreningen, som numera heter Svenskt Näringsliv. Måndag och torsdag ger en <b>gråsossejul</b>, ett rimligt mellanläge i den grå sossens anda: lite åt kapitalet, lite åt arbetarna.</p>
       <h3>Klämdagar</h3>
       <p>En klämdag är en enskild vardag med ledigt på båda sidor, till exempel fredagen efter Kristi himmelsfärdsdag. Två arbetsdagar på rad mellan lediga dagar räknas inte som klämdagar, även om många tar ledigt då också. Slå av eller på klämdagarna med reglaget högst upp.</p>
       <h3>Aftnar och kollektivavtal</h3>
@@ -493,8 +498,8 @@
   function setKlam(v) { state.klam = v; try { localStorage.setItem('aj-klam', v ? '1' : '0'); } catch (e) {} render(); }
   $('#klam').addEventListener('change', e => setKlam(e.target.checked));
   $('#klam2').addEventListener('change', e => setKlam(e.target.checked));
-  $('#prevYear').addEventListener('click', () => setYear(state.year - 1));
-  $('#nextYear').addEventListener('click', () => setYear(state.year + 1));
+  $('#yearDown').addEventListener('click', () => setYear(state.year - 1));
+  $('#yearUp').addEventListener('click', () => setYear(state.year + 1));
   $('#brandLink').addEventListener('click', e => { e.preventDefault(); setYear(NOW); window.scrollTo({ top: 0 }); });
   document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
     state.scope = b.dataset.scope;
@@ -503,8 +508,8 @@
   }));
   document.addEventListener('keydown', e => {
     if (e.target.matches('input, textarea, select')) return;
-    if (e.key === 'ArrowLeft') setYear(state.year - 1);
-    if (e.key === 'ArrowRight') setYear(state.year + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setYear(state.year - 1); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setYear(state.year + 1); }
   });
   window.addEventListener('hashchange', () => { state.year = h(); render(); });
   render();
