@@ -180,13 +180,20 @@
   .intro { max-width: 760px; width: 100%; margin-top: 22px; text-align: center; }
   .intro .tagline, .intro .weekday { margin: 0 auto; }
   .intro .weekday { margin-top: 8px; }
-  .neighbours { display: grid; grid-template-columns: 1fr; gap: 16px 36px; margin-top: 28px; font-size: 1rem; text-align: left; width: 100%; max-width: 860px; }
-  @media (min-width: 640px) { .neighbours { grid-template-columns: 1fr 1fr; } }
-  .neighbours p { margin: 0 0 5px; }
-  .neighbours p.same { opacity: .78; }
-  .neighbours b { font-size: 1.15em; font-weight: 800; margin-right: 4px; }
+  .neighbours { margin-top: 28px; text-align: left; width: 100%; max-width: 860px; }
+  .neighbours table { font-size: 1rem; }
+  .neighbours th, .neighbours td { padding: 10px 14px 10px 0; }
+  .neighbours th:last-child, .neighbours td:last-child { padding-right: 0; }
+  .neighbours th[scope="row"] { font-size: 1rem; font-weight: 700; white-space: nowrap; text-transform: capitalize; }
+  .neighbours thead th small { display: block; font-weight: 700; font-size: .78rem; opacity: .7; }
+  .neighbours tbody tr:last-child td, .neighbours tbody tr:last-child th { border-bottom: 0; }
+  .neighbours tr.same td, .neighbours tr.same th { opacity: .78; }
+  .neighbours td { white-space: nowrap; }
+  .neighbours td .yr { font-size: 1.15em; font-weight: 800; margin-right: 6px; }
+  .neighbours td small { font-size: .88rem; font-weight: 400; }
   .neighbours button { all: unset; cursor: pointer; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 3px; }
   .neighbours button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  @media (max-width: 480px) { .neighbours td small { display: block; margin-top: 2px; } .neighbours td .yr { margin-right: 0; } }
 
   /* ---------- Sektioner ---------- */
   section { padding: 30px 0 26px; }
@@ -517,16 +524,16 @@
 
     const others = Object.values(A.CATS).filter(c => c.key !== cat.key);
     const nb = $('#neighbours'); nb.innerHTML = '';
-    const fwd = el('div'), back = el('div');
-    const line = (label, yy, same) => el('p', same ? 'same' : null, `${label}: <b>${yy ? yearLink(yy) : '–'}</b> ${yy ? '(' + dagar(A.julCount(yy, k).total) + ')' : ''}`);
+    const cell = (yy) => yy ? `<span class="yr">${yearLink(yy)}</span><small>${dagar(A.julCount(yy, k).total)}</small>` : '–';
+    const tbl = el('table', null, `<thead><tr><th scope="col">Sorts jul</th><th scope="col">Senaste <small>före ${y}</small></th><th scope="col">Nästa <small>efter ${y}</small></th></tr></thead>`);
+    const tb = el('tbody');
     for (const c of others.concat([cat])) {
       const same = c.key === cat.key;
       const ny = findNext(y, yy => A.category(yy, k).key === c.key, 1);
       const py = findNext(y, yy => A.category(yy, k).key === c.key, -1);
-      fwd.appendChild(line(`Nästa ${c.name}${same ? ' efter ' + y : ''}`, ny, same));
-      back.appendChild(line(`Senaste ${c.name}en${same ? ' före ' + y : ''}`, py, same));
+      tb.appendChild(el('tr', same ? 'same' : null, `<th scope="row">${c.name}</th><td>${cell(py)}</td><td>${cell(ny)}</td>`));
     }
-    nb.appendChild(fwd); nb.appendChild(back);
+    tbl.appendChild(tb); nb.appendChild(tbl);
 
     // Strip
     const strip = $('#strip'); strip.innerHTML = '';
